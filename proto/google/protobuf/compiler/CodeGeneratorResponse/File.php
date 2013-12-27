@@ -34,6 +34,10 @@ class File extends \ProtocolBuffers\Message
 
   // @@protoc_insertion_point(class_scope:google.protobuf.compiler.CodeGeneratorResponse.File)
 
+  public function &getContentRef()
+  {
+      return $this->content;
+  }
   /**
    * get descriptor for protocol buffers
    * 

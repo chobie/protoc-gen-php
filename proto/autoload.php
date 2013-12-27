@@ -38,3 +38,26 @@ spl_autoload_register(function($name){
         require __DIR__ . DIRECTORY_SEPARATOR . $classmap[$name];
     }
 });
+
+$__extension_registry = \ProtocolBuffers\ExtensionRegistry::getInstance();
+$__extension_registry->add('google\protobuf\FileOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
+    "type"     => \ProtocolBuffers::TYPE_MESSAGE,
+    "name"     => "php",
+    "required" => false,
+    "optional" => true,
+    "repeated" => false,
+    "packable" => false,
+    "default"  => null,
+    "message"  => "\\PHPFileOptions",
+)));
+$__extension_registry->add('google\protobuf\MessageOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
+    "type"     => \ProtocolBuffers::TYPE_MESSAGE,
+    "name"     => "php_option",
+    "required" => false,
+    "optional" => true,
+    "repeated" => false,
+    "packable" => false,
+    "default"  => null,
+    "message"  => "\\PHPMessageOptions",
+)));
+unset($__extension_registry);

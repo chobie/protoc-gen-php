@@ -21,7 +21,7 @@ class FileGenerator
     public function generateSiblings(GeneratorContext $context)
     {
         foreach ($this->file->getMessageType() as $message) {
-            $output = $context->open($this->file->getName() . ".php");
+            $output = $context->open($message->getName() . ".php");
             $printer = new Printer($output, "`");
             $gen = new MessageGenerator($this->file, $message);
             $gen->generate($printer);

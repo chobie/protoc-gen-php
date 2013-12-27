@@ -5,8 +5,10 @@ class Printer
 {
     protected $replace;
     protected $level = 0;
-    protected $indent = 2;
+    protected $indent_char = '  ';
     protected $stream;
+
+    protected $next;
 
     public function __construct($stream, $replace)
     {
@@ -50,7 +52,15 @@ class Printer
             }
         }
 
-        $this->stream->write(str_repeat(" ", $this->level * $this->indent));
+        if ($this->next) {
+            $this->stream->write(str_repeat($this->indent_char, $this->level));
+        }
+
+        if (preg_match('/\n$/m', $message)) {
+            $this->next = true;
+        } else {
+            $this->next = false;
+        }
         $this->stream->write($message);
     }
 }

@@ -6,7 +6,30 @@ use protocolbuffers\io\Printer;
 class MessageGenerator
 {
     protected $file;
+
     protected $descriptor;
+
+    protected static $fields_map = array(
+        "DUMMY",
+        "\\ProtocolBuffers::TYPE_DOUBLE",
+        "\\ProtocolBuffers::TYPE_FLOAT",
+        "\\ProtocolBuffers::TYPE_INT64",
+        "\\ProtocolBuffers::TYPE_UINT64",
+        "\\ProtocolBuffers::TYPE_INT32",
+        "\\ProtocolBuffers::TYPE_FIXED64",
+        "\\ProtocolBuffers::TYPE_FIXED32",
+        "\\ProtocolBuffers::TYPE_BOOL",
+        "\\ProtocolBuffers::TYPE_STRING",
+        "\\ProtocolBuffers::TYPE_GROUP",
+        "\\ProtocolBuffers::TYPE_MESSAGE",
+        "\\ProtocolBuffers::TYPE_BYTES",
+        "\\ProtocolBuffers::TYPE_UINT32",
+        "\\ProtocolBuffers::TYPE_ENUM",
+        "\\ProtocolBuffers::TYPE_SFIXED32",
+        "\\ProtocolBuffers::TYPE_SFIXED64",
+        "\\ProtocolBuffers::TYPE_SINT32",
+        "\\ProtocolBuffers::TYPE_SINT64",
+    );
 
     public function __construct(\google\protobuf\FileDescriptorProto $file, \google\protobuf\DescriptorProto $descriptor)
     {
@@ -32,6 +55,8 @@ class MessageGenerator
 
     public function printGetDescriptor(Printer $printer)
     {
+        $php_options = $this->descriptor->getOptions();
+
         $printer->put("/**\n");
         $printer->put(" * get descriptor for protocol buffers\n");
         $printer->put(" * \n");
@@ -58,7 +83,7 @@ class MessageGenerator
             $printer->indent();
             $printer->put("\"type\"     => `type`,\n",
                 "type",
-                $field->getType());
+                self::$fields_map[$field->getType()]);
             $printer->put("\"name\"     => \"`name`\",\n",
                 "name",
                 $field->getName());
@@ -71,33 +96,64 @@ class MessageGenerator
             $printer->put("\"repeated\" => `repeated`,\n",
                 "repeated",
                 ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED) ? "true" : "false");
-            $printer->put("\"packable\" => `packable`,\n",
-                "packable",
-                ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED &&
-                    $field->getOptions()->getPacked()) ? "true" : "false");
+
+            $options = $field->getOptions();
+            if ($options) {
+                $printer->put("\"packable\" => `packable`,\n",
+                    "packable",
+                    ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED &&
+                        $field->getOptions()->getPacked()) ? "true" : "false");
+            } else {
+                $printer->put("\"packable\" => `packable`,\n",
+                    "packable",
+                    "false");
+            }
             $printer->put("\"default\"  => \"`value`\",\n",
                 "value",
                 $field->getDefaultValue());
 
             if ($field->getType() == \google\protobuf\FieldDescriptorProto\Type::TYPE_MESSAGE) {
-                $name = $field->getTypeName();
+                $name = array_pop(explode(".", $field->getTypeName()));
+
                 $descriptor = null;
                 foreach ($this->file->getMessageType() as $m) {
-                    if ("." . $m->getName() == $name){
+                    if ($m->getName() == $name){
                         $descriptor = $m;
                         break;
 
                     }
                 }
-                $printer->put("\"message\" => \"`message`\",\n",
-                    "message",
-                    $descriptor->getName()
-                );
+                if (!$descriptor) {
+                    //error_log(var_export($name, true));
+                } else {
+                    $printer->put("\"message\" => \"`message`\",\n",
+                        "message",
+                        $descriptor->getName()
+                    );
+                }
             }
 
             $printer->outdent();
             $printer->put(")));\n");
         }
+
+        if ($php_options instanceof \google\protobuf\MessageOptions) {
+            $php_message_options = $php_options->getExtension("php_option");
+            //error_log(var_export($php_options, true));
+            //error_log(var_export($php_message_options, true));
+
+            if ($php_message_options->getUseSingleProperty()) {
+                $printer->put("\$phpoptions = \$desc->getOptions()->getExtension");
+                $printer->put("(\\ProtocolBuffers::PHP_MESSAGE_OPTION);\n");
+                $printer->put("\$phpoptions->setUseSingleProperty(true);\n");
+                $printer->put("\$phpoptions->setSinglePropertyName(\"`name`\");\n",
+                    "name",
+                    $php_message_options->getSinglePropertyName());
+
+                $printer->put("\n");
+            }
+        }
+
 
         $printer->put("// @@protoc_insertion_point(builder_scope:`name`)\n\n",
             "name", $this->descriptor->getName());
@@ -120,7 +176,7 @@ class MessageGenerator
             " * source: `filename`\n" .
             " *\n",
             "filename",
-            ""
+            $this->file->getName()
         );
         $printer->put(" */\n");
 

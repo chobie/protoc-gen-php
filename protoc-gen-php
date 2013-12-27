@@ -4,7 +4,7 @@ require __DIR__ . DIRECTORY_SEPARATOR . "proto" . DIRECTORY_SEPARATOR . "autoloa
 require __DIR__ . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "protocolbuffers" . DIRECTORY_SEPARATOR . "Autoloader.php";
 \protocolbuffers\Autoloader::register();
 
-$stdin=  stream_get_contents(STDIN);
+$stdin =  stream_get_contents(STDIN);
 $compiler = new \protocolbuffers\Compiler();
 $response = $compiler->compile($stdin);
 fwrite(STDOUT, $response->serializeToString());

@@ -1,20 +1,38 @@
 <?php
 namespace protocolbuffers;
 
+use google\protobuf\compiler\CodeGeneratorResponse;
+
 class GeneratorContext
 {
-    protected $context = array();
+    protected $response;
+
+    public function __construct(CodeGeneratorResponse $response)
+    {
+        $this->response = $response;
+    }
 
     public function open($name)
     {
-        $stream = new ZerocopyOutputStream();
-        $this->context[$name] = $stream;
+        $file = new \google\protobuf\compiler\CodeGeneratorResponse\File();
+        $file->setName($name);
+        $this->response->appendFile($file);
+
+        $stream = new ZerocopyOutputStream($file->getContentRef());
 
         return $stream;
     }
 
-    public function getContexts()
+    public function openForInsert($name, $insertion_point)
     {
-        return $this->context;
+        $file = new \google\protobuf\compiler\CodeGeneratorResponse\File();
+        $file->setName($name);
+        $file->setInsertionPoint($insertion_point);
+        $this->response->appendFile($file);
+
+        $stream = new ZerocopyOutputStream($file->getContentRef());
+
+        return $stream;
+
     }
 }

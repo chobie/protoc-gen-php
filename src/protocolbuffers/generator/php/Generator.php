@@ -19,7 +19,5 @@ class Generator
         $file = new FileGenerator($file);
         $file->generate();
         $file->generateSiblings($context);
-
-
     }
 }
