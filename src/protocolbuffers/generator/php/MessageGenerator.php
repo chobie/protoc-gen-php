@@ -10,6 +10,7 @@
 
 namespace protocolbuffers\generator\php;
 
+use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 
 class MessageGenerator
@@ -17,6 +18,12 @@ class MessageGenerator
     protected $file;
 
     protected $descriptor;
+
+    protected $context;
+
+    protected $file_list;
+
+    protected $enclose_namespace_ = false;
 
     protected static $fields_map = array(
         "DUMMY",
@@ -40,10 +47,72 @@ class MessageGenerator
         "\\ProtocolBuffers::TYPE_SINT64",
     );
 
-    public function __construct(\google\protobuf\FileDescriptorProto $file, \google\protobuf\DescriptorProto $descriptor)
+    public function __construct(GeneratorContext $context, \google\protobuf\FileDescriptorProto $file, \google\protobuf\DescriptorProto $descriptor, &$file_list)
     {
         $this->file = $file;
         $this->descriptor = $descriptor;
+        $this->context = $context;
+        $this->file_list = &$file_list;
+
+        if ($file->getOptions()->getExtension("php")->getMultipleFiles()) {
+            $this->enclose_namespace_ = false;
+        } else {
+            $this->enclose_namespace_ = true;
+        }
+    }
+
+    public function hasNameSpace()
+    {
+        if ($this->getNameSpace()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getNameSpace()
+    {
+        $args = explode(".", $this->descriptor->full_name);
+        array_pop($args);
+        if (count($args)) {
+            return join("\\", $args);
+        } else {
+            return;
+        }
+    }
+
+    public function printUseNameSpaceIfNeeded(Printer $printer)
+    {
+        if ($this->hasNameSpace()) {
+            if ($this->enclose_namespace_) {
+                $printer->put(
+                    "namespace `namespace`\n{\n\n",
+                    "namespace",
+                    $this->getNameSpace());
+            } else {
+                $printer->put(
+                    "namespace `namespace`;\n\n",
+                    "namespace",
+                    $this->getNameSpace());
+            }
+        } else {
+            if ($this->enclose_namespace_) {
+                $printer->put("namespace {\n\n");
+            }
+        }
+
+//  NOTE: Printing use statement is troublesome in writing single file.
+//  printer->Print("use \\ProtocolBuffers;\n");
+//  printer->Print("use \\ProtocolBuffers\\Message;\n");
+//  printer->Print("use \\ProtocolBuffers\\FieldDescriptor;\n");
+//  printer->Print("use \\ProtocolBuffers\\DescriptorBuilder;\n");
+//  printer->Print("use \\ProtocolBuffers\\ExtensionRegistry;\n");
+
+        // TODO(chobie): add Message and Enum class here.
+
+        $printer->put("// @@protoc_insertion_point(namespace:`name`)\n",
+        "name", $this->descriptor->full_name);
+        $printer->put("\n");
     }
 
     public function printProperties(Printer $printer)
@@ -69,7 +138,7 @@ class MessageGenerator
         $printer->put("/**\n");
         $printer->put(" * get descriptor for protocol buffers\n");
         $printer->put(" * \n");
-        $printer->put(" * @return ProtocolBuffersDescriptor\n");
+        $printer->put(" * @return \\ProtocolBuffersDescriptor\n");
         $printer->put(" */\n");
         $printer->put("public static function getDescriptor()\n");
         $printer->put("{\n");
@@ -133,11 +202,22 @@ class MessageGenerator
                     }
                 }
                 if (!$descriptor) {
-                    //error_log(var_export($name, true));
+                    foreach ($this->descriptor->getNestedType() as $m) {
+                        if ($m->getName() == $name){
+                            $descriptor = $m;
+                            break;
+
+                        }
+                    }
+
+                    $printer->put("\"message\" => \"`message`\",\n",
+                        "message",
+                        str_replace(".", "\\\\", $descriptor->full_name)
+                    );
                 } else {
                     $printer->put("\"message\" => \"`message`\",\n",
                         "message",
-                        $descriptor->getName()
+                        str_replace(".", "\\\\", $descriptor->full_name)
                     );
                 }
             }
@@ -165,7 +245,7 @@ class MessageGenerator
 
 
         $printer->put("// @@protoc_insertion_point(builder_scope:`name`)\n\n",
-            "name", $this->descriptor->getName());
+            "name", $this->descriptor->full_name);
 
         $printer->put("\$descriptor = \$desc->build();\n");
         $printer->outdent();
@@ -176,9 +256,54 @@ class MessageGenerator
         $printer->put("}\n\n");
     }
 
+    public function fileName()
+    {
+        $name = $this->descriptor->full_name;
+        return str_replace(".", "/", $name) . ".php";
+
+    }
+
+    public function printTraitsInsertionPoint(Printer $printer)
+    {
+        $printer->put("// @@protoc_insertion_point(traits:`name`)\n",
+            "name", $this->descriptor->full_name);
+        $printer->put("\n");
+    }
+
     public function generate(Printer $printer)
     {
-        $printer->put("<?php\n");
+        foreach ($this->descriptor->getEnumType() as $enum) {
+            $enum->full_name = $this->file->getPackage() . "." . $this->descriptor->getName() . "." . $enum->getName();
+            $generator = new EnumGenerator($this->context, $this->file, $enum, $this->file_list);
+
+            if ($this->file->getOptions()->GetExtension("php")->getMultipleFiles()) {
+                $child_name = $generator->fileName();
+                $this->file_list[] = $child_name;
+                $child_printer = new Printer($this->context->open($child_name), "`");
+                $generator->Generate($child_printer);
+            }
+        }
+
+        foreach ($this->descriptor->getNestedType() as $message) {
+            $message->full_name = $this->file->getPackage() . "." . $this->descriptor->getName() . "." . $message->getName();
+
+            $generator = new MessageGenerator($this->context, $this->file, $message, $this->file_list);
+            if ($this->file->getOptions()->GetExtension("php")->getMultipleFiles()) {
+                $child_name = $generator->fileName();
+                $this->file_list[] = $child_name;
+                $child_printer = new Printer($this->context->open($child_name), "`");
+                $generator->Generate($child_printer);
+            }
+
+        }
+
+
+        if ($this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
+            $printer->put("<?php\n");
+        }
+
+        $this->printUseNameSpaceIfNeeded($printer);
+
         $printer->put(
             "/**\n" .
             " * Generated by the protocol buffer compiler.  DO NOT EDIT!\n" .
@@ -194,11 +319,21 @@ class MessageGenerator
             $this->descriptor->getName()
         );
         $printer->indent();
+
+        $this->printTraitsInsertionPoint($printer);
         $this->printProperties($printer);
+        $printer->put("// @@protoc_insertion_point(class_scope:`name`)\n\n",
+            "name", $this->descriptor->full_name);
+
         $this->printGetDescriptor($printer);
 
         $printer->outdent();
         $printer->put("}\n");
+
+        if ($this->enclose_namespace_) {
+            $printer->outdent();
+            $printer->put("}\n\n");
+        }
     }
 }
 

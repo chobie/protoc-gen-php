@@ -17,15 +17,65 @@ use protocolbuffers\io\Printer;
 class FileGenerator
 {
     protected $file;
+    protected $context;
 
-    public function __construct(\google\protobuf\FileDescriptorProto $file)
+    public function __construct(GeneratorContext $context, \google\protobuf\FileDescriptorProto $file)
     {
+        $this->context = $context;
         $this->file = $file;
     }
 
-    public function generate()
+    public function generate(Printer $printer)
     {
+        $printer->put("<?php\n");
+
+        if (!$this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
+            $file_list = array();
+
+            foreach ($this->file->getEnumType() as $enum) {
+            }
+
+            foreach ($this->file->getMessageType() as $message) {
+                $gen = new MessageGenerator($this->context, $this->file, $message, $file_list);
+                $gen->generate($printer);
+            }
+        } else {
+            $printer->put("require_once __DIR__ . DIRECTORY_SEPARATOR . 'autoload.php';\n");
+        }
     }
+
+    public function phppackage()
+    {
+        if ($this->file->getOptions()->getJavaPackage()) {
+            $result = $this->file->getOptions()->getJavaPackage();
+        } else {
+            $result = "";
+            if ($this->file->getPackage()) {
+                if (!$result) {
+                    $result .= ".";
+                }
+                $result .= $this->file->getPackage();
+
+            }
+        }
+
+        return $result;
+    }
+
+    public function getNameSpace()
+    {
+        $package = $this->file->getPackage();
+        if (!$package) {
+            $args = explode(".", $package);
+            array_pop($args);
+            $output = join("\\", $args);
+        } else {
+            $output = "";
+        }
+
+        return $output;
+    }
+
 
     public function generateAutoloader(Printer $printer, $file_list, $append_mode = false)
     {
@@ -41,12 +91,12 @@ class FileGenerator
         }
 
         foreach ($file_list as $file) {
-            $tmp = str_replace("/", "\\", $file);
-            $key = substr($file, 0, strrpos($file, "."));
+            $tmp = str_replace("\\", "/", $file);
+            $key = str_replace("/", "\\", substr($file, 0, strrpos($file, ".")));
 
             $printer->put("'`key`' => '`path`',\n",
-                    "key", $key,
-                    "path", $tmp
+                    "key", ltrim($key, "\\"),
+                    "path", "/" . ltrim($tmp, "/")
             );
         }
 
@@ -74,21 +124,35 @@ class FileGenerator
 
     }
 
-    public function generateSiblings(GeneratorContext $context, &$file_list)
+    public function generateSiblings($package_name, GeneratorContext $context, &$file_list)
     {
-        foreach ($this->file->getMessageType() as $message) {
-            $path = $message->getName() . ".php";
-            $output = $context->open($path);
-            $file_list[] = $path;
+        if ($this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
 
-            $printer = new Printer($output, "`");
-            $gen = new MessageGenerator($this->file, $message);
-            $gen->generate($printer);
+            foreach ($this->file->getEnumType() as $enum) {
+                $enum->full_name = $this->file->getPackage() . "." . $enum->getName();
+
+                $path = $package_name . DIRECTORY_SEPARATOR . $enum->getName() . ".php";
+                $output = $context->open($path);
+                $file_list[] = $path;
+
+                $printer = new Printer($output, "`");
+                $gen = new EnumGenerator($context, $this->file, $enum, $file_list);
+                $gen->generate($printer);
+            }
+
+            foreach ($this->file->getMessageType() as $message) {
+                $message->full_name = $this->file->getPackage() . "." . $message->getName();
+
+                $path = $package_name . DIRECTORY_SEPARATOR . $message->getName() . ".php";
+                $output = $context->open($path);
+                $file_list[] = $path;
+
+                $printer = new Printer($output, "`");
+                $gen = new MessageGenerator($context, $this->file, $message, $file_list);
+                $gen->generate($printer);
+            }
+
+            /* TODO(chobie): add service here */
         }
-
-//            GenerateSibling<MessageGenerator>(package_dir, "",
-//      file_->message_type(i),
-//      context, file_list, "",
-//      &MessageGenerator::Generate);
     }
 }

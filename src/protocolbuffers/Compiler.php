@@ -35,6 +35,7 @@ class Compiler
         $gen = new Generator();
         $parameter = array();
         $error = "";
+
         foreach ($req->getProtoFile() as $file_descriptor) {
             if ($file_descriptor->getName() == "proto/google/protobuf/descriptor.proto") {
                 continue;

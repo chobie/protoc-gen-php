@@ -14,11 +14,22 @@ use google\protobuf\compiler\CodeGeneratorResponse;
 class GeneratorContext
 {
     protected $response;
+    protected $contexts = array();
 
     public function __construct(CodeGeneratorResponse $response)
     {
         $this->response = $response;
     }
+
+    public function hasOpened($name)
+    {
+        if (isset($this->contexts[$name])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function open($name)
     {
@@ -29,6 +40,7 @@ class GeneratorContext
         $this->response->appendFile($file);
 
         $stream = new ZeroCopyOutputStream($stream);
+        $this->contexts[$name] = $stream;
 
         return $stream;
     }
@@ -43,6 +55,7 @@ class GeneratorContext
         $this->response->appendFile($file);
 
         $stream = new ZeroCopyOutputStream($stream);
+        $this->contexts[$name] = $stream;
 
         return $stream;
     }

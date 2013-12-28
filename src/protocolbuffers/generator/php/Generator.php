@@ -15,10 +15,18 @@ use protocolbuffers\io\Printer;
 
 class Generator
 {
-    protected $f = 0;
-
     public function __construct()
     {
+    }
+
+    public function phppackagetodir($name)
+    {
+        $package_dir = str_replace(".", "/", $name);
+        if (!$package_dir)  {
+            $package_dir .= "/";
+        }
+
+        return $package_dir;
     }
 
     public function generate(\google\protobuf\FileDescriptorProto $file,
@@ -29,19 +37,22 @@ class Generator
         //error_log(var_export($file, true));
         $file_list = array();
 
-        $file = new FileGenerator($file);
-        $file->generate();
-        $file->generateSiblings($context, $file_list);
+        $file_generator = new FileGenerator($context, $file);
+        $package_name = $file_generator->phppackage();
+        $package_dir = $this->phppackagetodir($package_name);
 
-        if (!$this->f) {
+        $printer = new Printer($context->open($file->getName() . ".php"), "`");
+        $file_generator->generate($printer);
+        $file_generator->generateSiblings($package_dir, $context, $file_list);
+
+        if (!$context->hasOpened("autoload.php")) {
             $printer = new Printer($context->open("autoload.php"), "`");
             $append_mode = false;
-            $this->f = 1;
         } else {
             $printer = new Printer($context->openForInsert("autoload.php", "autoloader_scope:classmap"), "`");
             $append_mode = true;
         }
 
-        $file->generateAutoloader($printer, $file_list, $append_mode);
+        $file_generator->generateAutoloader($printer, $file_list, $append_mode);
     }
 }

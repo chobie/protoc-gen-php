@@ -13,7 +13,11 @@ require __DIR__ . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "protocolb
 \protocolbuffers\Autoloader::register();
 
 $stdin =  stream_get_contents(STDIN);
+file_put_contents("dat", $stdin);
+
+//$stdin = file_get_contents("dat");
 $compiler = new \protocolbuffers\Compiler();
 $response = $compiler->compile($stdin);
+$result = $response->serializeToString();
 
-fwrite(STDOUT, $response->serializeToString());
+fwrite(STDOUT, $result);
