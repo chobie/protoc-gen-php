@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the protoc-gen-php package.
+ *
+ * (c) Shuhei Tanuma <shuhei.tanuma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace protocolbuffers;
 
 use protocolbuffers\generator\php\Generator;
@@ -10,13 +18,15 @@ class Compiler
         fwrite(STDERR, "# protoc-gen-php (pure php)\n");
     }
 
+    /**
+     * @param $input raw protocol buffers message
+     * @return \google\protobuf\compiler\CodeGeneratorResponse
+     */
     public function compile($input)
     {
         $packages = array();
 
         $req = \google\protobuf\compiler\CodeGeneratorRequest::parseFromString($input);
-        //$req->parseFromString($input);
-        //error_log(var_export($req, 1));
         /* @var $req \google\protobuf\compiler\CodeGeneratorRequest */
 
         $resp = new \google\protobuf\compiler\CodeGeneratorResponse();
@@ -26,16 +36,12 @@ class Compiler
         $parameter = array();
         $error = "";
         foreach ($req->getProtoFile() as $file_descriptor) {
-            //echo "# " . $file_descriptor->getName() . PHP_EOL;
-
             if ($file_descriptor->getName() == "proto/google/protobuf/descriptor.proto") {
-                //error_log(var_export($file_descriptor, true));
                 continue;
             }
             if ($file_descriptor->getName() == "php_options.proto") {
                 continue;
             }
-            //error_log("* " . $file_descriptor->getName());
 
             $gen->generate($file_descriptor, $parameter, $context, $error);
         }

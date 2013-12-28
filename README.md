@@ -1,4 +1,4 @@
-# protoc-gen-php
+# protoc-gen-php (example)
 
 example protoc plugin implementation.
 

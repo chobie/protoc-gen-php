@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the protoc-gen-php package.
+ *
+ * (c) Shuhei Tanuma <shuhei.tanuma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace protocolbuffers;
 
 use google\protobuf\compiler\CodeGeneratorResponse;
@@ -18,7 +26,7 @@ class GeneratorContext
         $file->setName($name);
         $this->response->appendFile($file);
 
-        $stream = new ZerocopyOutputStream($file->getContentRef());
+        $stream = new ZeroCopyOutputStream($file->getContentRef());
 
         return $stream;
     }
@@ -30,9 +38,8 @@ class GeneratorContext
         $file->setInsertionPoint($insertion_point);
         $this->response->appendFile($file);
 
-        $stream = new ZerocopyOutputStream($file->getContentRef());
+        $stream = new ZeroCopyOutputStream($file->getContentRef());
 
         return $stream;
-
     }
 }
