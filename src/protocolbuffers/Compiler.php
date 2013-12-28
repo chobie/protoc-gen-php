@@ -9,13 +9,55 @@
  */
 namespace protocolbuffers;
 
+use google\protobuf\DescriptorProto;
+use google\protobuf\EnumDescriptorProto;
+use google\protobuf\FieldDescriptorProto;
+use google\protobuf\FileDescriptorProto;
 use protocolbuffers\generator\php\Generator;
+use protocolbuffers\generator\php\Helper as MyHelper;
 
 class Compiler
 {
     public function __construct()
     {
         fwrite(STDERR, "# protoc-gen-php\n");
+    }
+
+    protected function setupFullNameForEnum(EnumDescriptorProto $enum, $package_name = "")
+    {
+        $enum->full_name = $package_name . "." . $enum->getName();
+        $enum->package_name = $package_name;
+        MessagePool::register($enum->full_name, $enum);
+    }
+
+    protected function setupFullNameForMessage(DescriptorProto $message, $package_name = "")
+    {
+        $new_package_name = $package_name . "." . $message->getName();
+        foreach ($message->getEnumType() as $enum) {
+            $this->setupFullNameForEnum($enum, $new_package_name);
+        }
+
+        foreach ($message->getNestedType() as $m) {
+            $this->setupFullNameForMessage($m, $new_package_name);
+        }
+
+        $message->full_name = $package_name . "." .$message->getName();
+        $message->package_name = $package_name;
+        MessagePool::register($message->full_name, $message);
+    }
+
+    public function setupFullName(\google\protobuf\compiler\CodeGeneratorRequest $req)
+    {
+        foreach ($req->getProtoFile() as $file_descriptor) {
+            $package_name = MyHelper::phppackage($file_descriptor);
+            /* @var $file_descriptor FileDescriptorProto */
+            foreach ($file_descriptor->getEnumType() as $enum) {
+                $this->setupFullNameForEnum($enum, $package_name);
+            }
+            foreach ($file_descriptor->getMessageType() as $message) {
+                $this->setupFullNameForMessage($message, $package_name);
+            }
+        }
     }
 
     /**
@@ -27,14 +69,14 @@ class Compiler
         $packages = array();
 
         $req = \ProtocolBuffers::decode('google\protobuf\compiler\CodeGeneratorRequest', $input);
+        $this->setupFullName($req);
         /* @var $req \google\protobuf\compiler\CodeGeneratorRequest */
 
+        $parameter = array();
         $resp = new \google\protobuf\compiler\CodeGeneratorResponse();
         $context = new GeneratorContext($resp);
-
         $gen = new Generator();
-        $parameter = array();
-        $error = "";
+        $error = new StringStream();
 
         foreach ($req->getProtoFile() as $file_descriptor) {
             if ($file_descriptor->getName() == "proto/google/protobuf/descriptor.proto") {

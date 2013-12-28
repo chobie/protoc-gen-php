@@ -10,6 +10,7 @@
 
 namespace protocolbuffers\generator\php;
 
+use google\protobuf\FieldDescriptorProto;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 
@@ -19,7 +20,8 @@ class FileGenerator
     protected $file;
     protected $context;
 
-    public function __construct(GeneratorContext $context, \google\protobuf\FileDescriptorProto $file)
+    public function __construct(GeneratorContext $context,
+                                \google\protobuf\FileDescriptorProto $file)
     {
         $this->context = $context;
         $this->file = $file;
@@ -46,7 +48,10 @@ class FileGenerator
 
     public function phppackage()
     {
-        if ($this->file->getOptions()->getJavaPackage()) {
+        $package = getEnv("PACKAGE");
+        if ($package) {
+            $result = $package;
+        } else if ($this->file->getOptions()->getJavaPackage()) {
             $result = $this->file->getOptions()->getJavaPackage();
         } else {
             $result = "";
@@ -129,7 +134,7 @@ class FileGenerator
         if ($this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
 
             foreach ($this->file->getEnumType() as $enum) {
-                $enum->full_name = $this->file->getPackage() . "." . $enum->getName();
+                $enum->full_name = Helper::getPackageName($this->file) . "." . $enum->getName();
 
                 $path = $package_name . DIRECTORY_SEPARATOR . $enum->getName() . ".php";
                 $output = $context->open($path);
@@ -141,7 +146,7 @@ class FileGenerator
             }
 
             foreach ($this->file->getMessageType() as $message) {
-                $message->full_name = $this->file->getPackage() . "." . $message->getName();
+                $message->full_name = Helper::getPackageName($this->file) . "." . $message->getName();
 
                 $path = $package_name . DIRECTORY_SEPARATOR . $message->getName() . ".php";
                 $output = $context->open($path);

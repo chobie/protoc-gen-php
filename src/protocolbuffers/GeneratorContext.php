@@ -30,7 +30,6 @@ class GeneratorContext
         }
     }
 
-
     public function open($name)
     {
         $file = new \google\protobuf\compiler\CodeGeneratorResponse\File();

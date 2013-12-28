@@ -25,7 +25,6 @@ class Printer
         $this->replace = $replace;
     }
 
-
     public function indent()
     {
         $this->level++;

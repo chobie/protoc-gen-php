@@ -16,7 +16,10 @@ use protocolbuffers\io\Printer;
 
 class EnumGenerator extends MessageGenerator
 {
-    public function __construct(GeneratorContext $context, \google\protobuf\FileDescriptorProto $file, \google\protobuf\EnumDescriptorProto $descriptor, &$file_list)
+    public function __construct(GeneratorContext $context,
+                                \google\protobuf\FileDescriptorProto $file,
+                                \google\protobuf\EnumDescriptorProto $descriptor,
+                                &$file_list)
     {
         $this->file = $file;
         $this->descriptor = $descriptor;
@@ -29,7 +32,6 @@ class EnumGenerator extends MessageGenerator
             $this->enclose_namespace_ = true;
         }
     }
-
 
     public function getEnumValueAsString(EnumValueDescriptorProto $value)
     {
@@ -76,6 +78,5 @@ class EnumGenerator extends MessageGenerator
             $printer->outdent();
             $printer->put("}\n\n");
         }
-
     }
 }

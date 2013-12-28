@@ -12,6 +12,7 @@ namespace protocolbuffers\generator\php;
 
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
+use protocolbuffers\StringStream;
 
 class Generator
 {
@@ -30,29 +31,32 @@ class Generator
     }
 
     public function generate(\google\protobuf\FileDescriptorProto $file,
-                             $paramter,
+                             $paramter = array(),
                              GeneratorContext $context,
-                             &$error) {
-        // google\protobuf\FileDescriptorProto
-        //error_log(var_export($file, true));
+                             StringStream $error) {
         $file_list = array();
 
-        $file_generator = new FileGenerator($context, $file);
-        $package_name = $file_generator->phppackage();
-        $package_dir = $this->phppackagetodir($package_name);
+        try {
+            $file_generator = new FileGenerator($context, $file);
+            $package_name = $file_generator->phppackage();
+            $package_dir = $this->phppackagetodir($package_name);
 
-        $printer = new Printer($context->open($file->getName() . ".php"), "`");
-        $file_generator->generate($printer);
-        $file_generator->generateSiblings($package_dir, $context, $file_list);
+            $printer = new Printer($context->open($file->getName() . ".php"), "`");
+            $file_generator->generate($printer);
+            $file_generator->generateSiblings($package_dir, $context, $file_list);
 
-        if (!$context->hasOpened("autoload.php")) {
-            $printer = new Printer($context->open("autoload.php"), "`");
-            $append_mode = false;
-        } else {
-            $printer = new Printer($context->openForInsert("autoload.php", "autoloader_scope:classmap"), "`");
-            $append_mode = true;
+            if (!$context->hasOpened("autoload.php")) {
+                $printer = new Printer($context->open("autoload.php"), "`");
+                $append_mode = false;
+            } else {
+                $printer = new Printer($context->openForInsert("autoload.php", "autoloader_scope:classmap"), "`");
+                $append_mode = true;
+            }
+
+            $file_generator->generateAutoloader($printer, $file_list, $append_mode);
+        } catch (\Exception $e) {
+            $error->assign($e->getMessage());
         }
 
-        $file_generator->generateAutoloader($printer, $file_list, $append_mode);
     }
 }
