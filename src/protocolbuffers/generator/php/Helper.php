@@ -62,6 +62,16 @@ class Helper
         return $result;
     }
 
+    public static function IsPackageNameOverriden()
+    {
+        $package = getEnv("PACKAGE");
+        if ($package) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function getPackageName(FileDescriptorProto $file)
     {
         $package = getEnv("PACKAGE");

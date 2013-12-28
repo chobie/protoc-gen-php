@@ -80,7 +80,8 @@ class MessageGenerator
         $args = explode(".", $this->descriptor->full_name);
         array_pop($args);
         if (count($args)) {
-            return join("\\", $args);
+            $tmp = join("\\", $args);
+            return ltrim($tmp, "\\");
         } else {
             return;
         }
@@ -213,8 +214,8 @@ class MessageGenerator
                 $this->defaultValueAsString($field));
 
             if ($field->getType() == \google\protobuf\FieldDescriptorProto\Type::TYPE_MESSAGE) {
+                $name = $field->getTypeName();
 
-                $name = Helper::getFullQualifiedTypeName($field, $this->descriptor, $this->file);
                 $descriptor = MessagePool::get($name);
                 $printer->put("\"message\" => \"`message`\",\n",
                     "message",
@@ -293,14 +294,14 @@ class MessageGenerator
             case \ProtocolBuffers::TYPE_GROUP:
                 return;
             case \ProtocolBuffers::TYPE_MESSAGE:
-                return str_replace(".", "\\", "." . Helper::getFullQualifiedTypeName($field, $this->descriptor, $this->file));
+                return str_replace(".", "\\", $field->getTypeName());
                 break;
             case \ProtocolBuffers::TYPE_BYTES:
             case \ProtocolBuffers::TYPE_UINT32:
                 return $default_type;
                 break;
             case \ProtocolBuffers::TYPE_ENUM:
-                return str_replace(".", "\\", "." . Helper::getFullQualifiedTypeName($field, $this->descriptor, $this->file));
+                return str_replace(".", "\\", $field->getTypeName());
                 break;
             case \ProtocolBuffers::TYPE_SFIXED32:
             case \ProtocolBuffers::TYPE_SFIXED64:
@@ -352,11 +353,11 @@ class MessageGenerator
                 $default_value = $field->getDefaultValue();
                 break;
             case \ProtocolBuffers::TYPE_ENUM:
-                $value = Helper::getPackageName($this->file) . $field->getTypeName();
+                $value = $field->getTypeName();
                 $descriptor = MessagePool::get($value);
                 if ($field->getLabel() != FieldDescriptorProto\Label::LABEL_REPEATED) {
                     if ($field->hasDefaultValue()) {
-                        $value = "\\" . str_replace(".", "\\", $descriptor->full_name). "::" . $field->getDefaultValue();
+                        $value = str_replace(".", "\\", $descriptor->full_name). "::" . $field->getDefaultValue();
                     } else {
                         $value = "null";
                     }

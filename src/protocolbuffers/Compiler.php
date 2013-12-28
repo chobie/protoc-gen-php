@@ -44,6 +44,17 @@ class Compiler
         $message->full_name = $package_name . "." .$message->getName();
         $message->package_name = $package_name;
         MessagePool::register($message->full_name, $message);
+
+        if (MyHelper::IsPackageNameOverriden()) {
+            foreach ($message->getField() as $field) {
+                /** @var $field FieldDescriptorProto */
+
+                if ($field->getType() == \ProtocolBuffers::TYPE_MESSAGE ||
+                    $field->getType() == \ProtocolBuffers::TYPE_ENUM) {
+                    $field->setTypeName(getEnv("PACKAGE") . $field->getTypeName());
+                }
+            }
+        }
     }
 
     public function setupFullName(\google\protobuf\compiler\CodeGeneratorRequest $req)

@@ -22,6 +22,8 @@ class MessagePool
     {
         if (isset(self::$pool[$name])) {
             return self::$pool[$name];
+        } else {
+            throw new \InvalidArgumentException(sprintf("%s does not find", $name));
         }
     }
 

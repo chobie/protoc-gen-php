@@ -55,7 +55,7 @@ class Generator
 
             $file_generator->generateAutoloader($printer, $file_list, $append_mode);
         } catch (\Exception $e) {
-            $error->assign($e->getMessage());
+            $error->assign($e->getMessage() . "\n" . $e->getTraceAsString());
         }
 
     }
