@@ -15,7 +15,7 @@ class Compiler
 {
     public function __construct()
     {
-        fwrite(STDERR, "# protoc-gen-php (pure php)\n");
+        fwrite(STDERR, "# protoc-gen-php\n");
     }
 
     /**
@@ -26,7 +26,7 @@ class Compiler
     {
         $packages = array();
 
-        $req = \google\protobuf\compiler\CodeGeneratorRequest::parseFromString($input);
+        $req = \ProtocolBuffers::decode('google\protobuf\compiler\CodeGeneratorRequest', $input);
         /* @var $req \google\protobuf\compiler\CodeGeneratorRequest */
 
         $resp = new \google\protobuf\compiler\CodeGeneratorResponse();

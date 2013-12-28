@@ -34,6 +34,9 @@ class Printer
     public function outdent()
     {
         $this->level--;
+        if ($this->level < 0) {
+            throw new \RuntimeException("too low indent level.");
+        }
     }
 
     public function put($message/* $args */)
@@ -45,6 +48,10 @@ class Printer
         $value = "";
         $tmp = array();
         if (count($args)) {
+            if (count($args) % 2 != 0) {
+                throw new \InvalidArgumentException("parameter doesn't match");
+            }
+
             for ($i = 0; $i < count($args); $i++) {
                 if ($i % 2 == 0) {
                     $key = $args[$i];

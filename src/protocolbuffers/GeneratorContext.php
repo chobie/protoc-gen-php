@@ -23,10 +23,12 @@ class GeneratorContext
     public function open($name)
     {
         $file = new \google\protobuf\compiler\CodeGeneratorResponse\File();
+        $stream  = new StringStream();
+        $file->setContent($stream);
         $file->setName($name);
         $this->response->appendFile($file);
 
-        $stream = new ZeroCopyOutputStream($file->getContentRef());
+        $stream = new ZeroCopyOutputStream($stream);
 
         return $stream;
     }
@@ -34,11 +36,13 @@ class GeneratorContext
     public function openForInsert($name, $insertion_point)
     {
         $file = new \google\protobuf\compiler\CodeGeneratorResponse\File();
+        $stream  = new StringStream();
         $file->setName($name);
+        $file->setContent($stream);
         $file->setInsertionPoint($insertion_point);
         $this->response->appendFile($file);
 
-        $stream = new ZeroCopyOutputStream($file->getContentRef());
+        $stream = new ZeroCopyOutputStream($stream);
 
         return $stream;
     }

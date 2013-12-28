@@ -11,15 +11,15 @@ namespace protocolbuffers;
 
 class ZeroCopyOutputStream
 {
-    protected $buffer;
+    protected $stream;
 
-    public function __construct(&$ref)
+    public function __construct($stream)
     {
-        $this->buffer = &$ref;
+        $this->stream = $stream;
     }
 
     public function write($message)
     {
-        $this->buffer .= $message;
+        $this->stream->append($message);
     }
 }
