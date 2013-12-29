@@ -18,6 +18,9 @@ use protocolbuffers\generator\php\Helper as MyHelper;
 
 class Compiler
 {
+    /* @var FileDescriptorProto $file */
+    protected $file;
+
     public function __construct()
     {
         fwrite(STDERR, "# protoc-gen-php\n");
@@ -45,13 +48,23 @@ class Compiler
         $message->package_name = $package_name;
         MessagePool::register($message->full_name, $message);
 
-        if (MyHelper::IsPackageNameOverriden()) {
+        if (MyHelper::IsPackageNameOverriden($this->file)) {
             foreach ($message->getField() as $field) {
                 /** @var $field FieldDescriptorProto */
 
                 if ($field->getType() == \ProtocolBuffers::TYPE_MESSAGE ||
                     $field->getType() == \ProtocolBuffers::TYPE_ENUM) {
-                    $field->setTypeName(getEnv("PACKAGE") . $field->getTypeName());
+
+                    $name = $field->getTypeName();
+                    $package = $this->file->getPackage();
+
+                    if ($package) {
+                        $name = str_replace($package, MyHelper::getPackageName($this->file), $name);
+                    } else {
+                        $name =  MyHelper::getPackageName($this->file) . $name;
+                    }
+                    $name = preg_replace("/^\.+/", ".", $name);
+                    $field->setTypeName($name);
                 }
             }
         }
@@ -60,7 +73,14 @@ class Compiler
     public function setupFullName(\google\protobuf\compiler\CodeGeneratorRequest $req)
     {
         foreach ($req->getProtoFile() as $file_descriptor) {
-            $package_name = MyHelper::phppackage($file_descriptor);
+            $this->file = $file_descriptor;
+
+            if (MyHelper::IsPackageNameOverriden($file_descriptor)) {
+                $package_name = MyHelper::getPackageName($file_descriptor);
+            } else {
+                $package_name = MyHelper::phppackage($file_descriptor);
+            }
+
             /* @var $file_descriptor FileDescriptorProto */
             foreach ($file_descriptor->getEnumType() as $enum) {
                 $this->setupFullNameForEnum($enum, $package_name);
@@ -68,6 +88,8 @@ class Compiler
             foreach ($file_descriptor->getMessageType() as $message) {
                 $this->setupFullNameForMessage($message, $package_name);
             }
+
+            $file_descriptor->setPackage(MyHelper::getPackageName($file_descriptor));
         }
     }
 
@@ -89,11 +111,10 @@ class Compiler
         $gen = new Generator();
         $error = new StringStream();
 
+        //error_log(var_export($req->getFileToGenerate(), true));
         foreach ($req->getProtoFile() as $file_descriptor) {
-            if ($file_descriptor->getName() == "proto/google/protobuf/descriptor.proto") {
-                continue;
-            }
-            if ($file_descriptor->getName() == "php_options.proto") {
+            if(!in_array($file_descriptor->getName(), $req->getFileToGenerate())) {
+                error_log($file_descriptor->getName());
                 continue;
             }
 

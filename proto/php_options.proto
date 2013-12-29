@@ -1,0 +1,21 @@
+import "google/protobuf/descriptor.proto";
+
+message PHPFileOptions {
+  optional bool   multiple_files = 1 [default = true];
+  optional bool   skip_unknown = 2;
+  optional string base_class   = 3 [default = ""];
+}
+
+message PHPMessageOptions {
+  optional bool use_single_property = 2 [default = false];
+  optional string single_property_name = 3 [default = "_properties"];
+  optional bool use_wakeup_and_sleep = 4 [default = false];
+}
+
+extend google.protobuf.FileOptions {
+  optional PHPFileOptions php = 1004;
+}
+
+extend google.protobuf.MessageOptions {
+  optional PHPMessageOptions php_option = 1004;
+}

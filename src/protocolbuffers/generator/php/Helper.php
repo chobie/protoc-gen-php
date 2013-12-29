@@ -62,10 +62,17 @@ class Helper
         return $result;
     }
 
-    public static function IsPackageNameOverriden()
+    public static function IsPackageNameOverriden(FileDescriptorProto $file)
     {
         $package = getEnv("PACKAGE");
+        $result = null;
         if ($package) {
+            $result = $package;
+        } else if ($file->getOptions()->getJavaPackage()) {
+            $result = $file->getOptions()->getJavaPackage();
+        }
+
+        if ($result) {
             return true;
         } else {
             return false;
@@ -77,8 +84,8 @@ class Helper
         $package = getEnv("PACKAGE");
         if ($package) {
             $result = $package;
-        } else if ($file->getOptions()->getJavaPackage()) {
-            $result = $file->getOptions()->getJavaPackage();
+//        } else if ($file->getOptions()->getJavaPackage()) {
+//            $result = $file->getOptions()->getJavaPackage();
         } else {
             $result = "";
             if ($file->getPackage()) {
@@ -88,6 +95,7 @@ class Helper
                 $result .= $file->getPackage();
             }
         }
+        $result = preg_replace("/^\.+/", ".", $result);
 
         return $result;
     }

@@ -15,14 +15,17 @@ class MessagePool
 
     public static function register($name, $descriptor)
     {
+        $name = ltrim($name, ".");
         self::$pool[$name] = $descriptor;
     }
 
     public static function get($name)
     {
+        $name = ltrim($name, ".");
         if (isset(self::$pool[$name])) {
             return self::$pool[$name];
         } else {
+            error_log(var_export(array_keys(self::$pool), true));
             throw new \InvalidArgumentException(sprintf("%s does not find", $name));
         }
     }

@@ -1,0 +1,39 @@
+{
+    "name": "protoc-gen-php/protoc-gen-php",
+    "description": "The PHP protoc generator plugin.",
+    "type": "library",
+    "keywords": [
+        "protoc",
+        "protocol buffers"
+    ],
+    "homepage": "https://github.com/chobie/protoc-gen-php",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Shuhei Tanuma",
+            "email": "chobieeee@php.net",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/chobie/protoc-gen-php/issues"
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "ext-pcre": "*"
+    },
+    "bin": [
+        "composer/bin/protoc-gen-php"
+    ],
+    "autoload": {
+        "psr-0" : {
+            "protocolbuffers" : "src"
+        },
+        "files": [
+            "proto/autoload.php"
+        ]
+    },
+    "config": {
+        "bin-dir": "/usr/local/bin/"
+    }
+}

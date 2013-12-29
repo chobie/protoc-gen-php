@@ -38,9 +38,14 @@ class Generator
 
         try {
             $file_generator = new FileGenerator($context, $file);
-            $package_name = $file_generator->phppackage();
-            $package_dir = $this->phppackagetodir($package_name);
 
+            if (Helper::IsPackageNameOverriden($file)) {
+                $package_name = Helper::getPackageName($file);
+            } else {
+                $package_name = Helper::phppackage($file);
+            }
+
+            $package_dir = $this->phppackagetodir($package_name);
             $printer = new Printer($context->open($file->getName() . ".php"), "`");
             $file_generator->generate($printer);
             $file_generator->generateSiblings($package_dir, $context, $file_list);

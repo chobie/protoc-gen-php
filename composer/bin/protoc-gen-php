@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-require __DIR__ . DIRECTORY_SEPARATOR . "proto" . DIRECTORY_SEPARATOR . "autoload.php";
-require __DIR__ . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "protocolbuffers" . DIRECTORY_SEPARATOR . "Autoloader.php";
-\protocolbuffers\Autoloader::register();
+require  __DIR__ . '/../../vendor/autoload.php';
+
+
 
 $stdin =  stream_get_contents(STDIN);
 file_put_contents("dat", $stdin);
