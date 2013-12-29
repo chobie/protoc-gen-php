@@ -338,7 +338,7 @@ class MessageGenerator
                 $default_value = $field->getDefaultValue();
                 break;
             case \ProtocolBuffers::TYPE_BOOL:
-                return ($field->getDefaultValue()) ? "true" : "false";
+                return ($field->getDefaultValue() == "true") ? "true" : "false";
             case \ProtocolBuffers::TYPE_STRING:
                 return "\"" . addcslashes($field->getDefaultValue(), "\"\n\r\$") . "\"";
             case \ProtocolBuffers::TYPE_GROUP:
@@ -355,8 +355,10 @@ class MessageGenerator
             case \ProtocolBuffers::TYPE_ENUM:
                 $value = $field->getTypeName();
                 $descriptor = MessagePool::get($value);
+
                 if ($field->getLabel() != FieldDescriptorProto\Label::LABEL_REPEATED) {
-                    if ($field->hasDefaultValue()) {
+                    $def = $field->getDefaultValue();
+                    if (!empty($def)) {
                         $value = str_replace(".", "\\", $descriptor->full_name). "::" . $field->getDefaultValue();
                     } else {
                         $value = "null";
@@ -416,8 +418,8 @@ class MessageGenerator
 
     public function printExtension(Printer $printer, FieldDescriptorProto $field)
     {
-        $printer->put("\$registry->add(`message`, `extension`, new \\ProtocolBuffers\\FieldDescriptor(array(\n",
-            "message", $this->getTypeName($field),
+        $printer->put("\$registry->add('`message`', `extension`, new \\ProtocolBuffers\\FieldDescriptor(array(\n",
+            "message", str_replace(".", "\\", $field->getExtendee()),
             "extension", $field->getNumber()
         );
         $printer->indent();
@@ -458,7 +460,7 @@ class MessageGenerator
             $descriptor = MessagePool::get($name);
             $printer->put("\"message\" => \"`message`\",\n",
                 "message",
-                str_replace(".", "\\\\", $descriptor->full_name)
+                ltrim(str_replace(".", "\\\\", $descriptor->full_name), "\\")
             );
         }
 
@@ -468,9 +470,9 @@ class MessageGenerator
 
     public function printExtensions()
     {
-        if ($this->file->getExtension()) {
+        if ($this->file->get("extension")) {
             $printer = new Printer($this->context->openForInsert("autoload.php", "extension_scope:registry"), "`");
-            foreach ($this->file->getExtension() as $ext) {
+            foreach ($this->file->get("extension") as $ext) {
                 $this->printExtension($printer, $ext);
             }
         }
@@ -539,6 +541,8 @@ class MessageGenerator
             $printer->outdent();
             $printer->put("}\n\n");
         }
+
+        $this->printExtensions();
     }
 }
 

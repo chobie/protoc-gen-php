@@ -87,7 +87,7 @@ class FieldDescriptorProto extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => \google\protobuf\FieldDescriptorProto\Label::LABEL_OPTIONAL,
+        "default"  => null,
       )));
       $desc->addField(5, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_ENUM,
@@ -96,7 +96,7 @@ class FieldDescriptorProto extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => \google\protobuf\FieldDescriptorProto\Type::TYPE_DOUBLE,
+        "default"  => null,
       )));
       $desc->addField(6, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_STRING,

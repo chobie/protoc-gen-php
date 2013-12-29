@@ -95,7 +95,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(20, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,
@@ -104,7 +104,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(9, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_ENUM,
@@ -131,7 +131,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(17, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,
@@ -140,7 +140,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(18, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,
@@ -149,7 +149,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(999, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,

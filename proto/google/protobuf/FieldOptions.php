@@ -83,7 +83,7 @@ class FieldOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(3, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,
@@ -92,7 +92,7 @@ class FieldOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(9, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_STRING,
@@ -110,7 +110,7 @@ class FieldOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(999, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,

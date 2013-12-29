@@ -49,7 +49,7 @@ class MessageOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(2, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,
@@ -58,7 +58,7 @@ class MessageOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(999, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,

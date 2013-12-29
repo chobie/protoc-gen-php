@@ -47,7 +47,7 @@ class PHPMessageOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       $desc->addField(3, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_STRING,
@@ -65,7 +65,7 @@ class PHPMessageOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => true,
+        "default"  => false,
       )));
       // @@protoc_insertion_point(builder_scope:.PHPMessageOptions)
 

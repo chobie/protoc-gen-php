@@ -41,26 +41,26 @@ spl_autoload_register(function($name){
 });
 
 call_user_func(function(){
-    $registry = \ProtocolBuffers\ExtensionRegistry::getInstance();
-    $registry->add('google\protobuf\FileOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
-        "type"     => \ProtocolBuffers::TYPE_MESSAGE,
-        "name"     => "php",
-        "required" => false,
-        "optional" => true,
-        "repeated" => false,
-        "packable" => false,
-        "default"  => null,
-        "message"  => "\\PHPFileOptions",
-    )));
-    $registry->add('google\protobuf\MessageOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
-        "type"     => \ProtocolBuffers::TYPE_MESSAGE,
-        "name"     => "php_option",
-        "required" => false,
-        "optional" => true,
-        "repeated" => false,
-        "packable" => false,
-        "default"  => null,
-        "message"  => "\\PHPMessageOptions",
-    )));
-    // @@protoc_insertion_point(extension_scope:registry)
+  $registry = \ProtocolBuffers\ExtensionRegistry::getInstance();
+  $registry->add('\google\protobuf\FileOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
+    "type"     => \ProtocolBuffers::TYPE_MESSAGE,
+    "name"     => "php",
+    "required" => false,
+    "optional" => true,
+    "repeated" => false,
+    "packable" => false,
+    "default"  => null,
+    "message" => "PHPFileOptions",
+  )));
+  $registry->add('\google\protobuf\MessageOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
+    "type"     => \ProtocolBuffers::TYPE_MESSAGE,
+    "name"     => "php_option",
+    "required" => false,
+    "optional" => true,
+    "repeated" => false,
+    "packable" => false,
+    "default"  => null,
+    "message" => "PHPMessageOptions",
+  )));
+  // @@protoc_insertion_point(extension_scope:registry)
 });
