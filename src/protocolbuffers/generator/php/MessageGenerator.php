@@ -11,6 +11,7 @@
 namespace protocolbuffers\generator\php;
 
 use google\protobuf\FieldDescriptorProto;
+use protocolbuffers\ExtensionPool;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 use protocolbuffers\MessagePool;
@@ -418,6 +419,12 @@ class MessageGenerator
 
     public function printExtension(Printer $printer, FieldDescriptorProto $field)
     {
+        if (ExtensionPool::has($field->getExtendee(), $field->getNumber())) {
+            // NOTE: already registered.
+            return;
+        }
+
+        ExtensionPool::register($field->getExtendee(), $field->getNumber(), $field);
         $printer->put("\$registry->add('`message`', `extension`, new \\ProtocolBuffers\\FieldDescriptor(array(\n",
             "message", str_replace(".", "\\", $field->getExtendee()),
             "extension", $field->getNumber()
