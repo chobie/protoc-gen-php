@@ -15,6 +15,7 @@ use protocolbuffers\ExtensionPool;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 use protocolbuffers\MessagePool;
+use protocolbuffers\SourceInfoDictionary;
 
 class MessageGenerator
 {
@@ -135,16 +136,61 @@ class MessageGenerator
             foreach ($this->descriptor->getField() as $field) {
                 /* @var $field \google\protobuf\FieldDescriptorProto */
 
-                $printer->put("/** @var `type` $`var` tag:`tag` ",
+                $printer->put("/**\n");
+                if ($dict = SourceInfoDictionary::get($this->file->getName(), $this->descriptor->getName(), $field->getName())) {
+                    /* @var $dict \google\protobuf\SourceCodeInfo\Location */
+                    if ($dict->getLeadingComments()) {
+                        $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
+                        foreach ($lines as $line) {
+                            if (strlen($line) > 0 && $line[0] == " ") {
+                                $line = substr($line, 1);
+                            }
+                            $line = preg_replace("!\*/!", "", $line);
+                            $line = preg_replace("!/\*!", "//", $line);
+                            $line = preg_replace("! \*!", "//", $line);
+                            $printer->put(" * `comment`\n", "comment", $line);
+                        }
+                        $printer->put(" *\n");
+                    }
+                }
+                $printer->put(" * @var `type` $`var`\n",
                     "type", $this->getTypeName($field),
-                    "var", $field->getName(),
+                    "var", $field->getName());
+                $printer->put(" * @tag `tag`\n",
                     "tag", $field->getNumber());
-                $printer->put(" `required` */\n",
+                $printer->put(" * @label `required`\n",
                     "required", ($field->getLabel() == FieldDescriptorProto\Label::LABEL_REQUIRED ? "required" : "optional"));
+
+                if ($field->getLabel() == FieldDescriptorProto\Label::LABEL_REPEATED &&
+                    $field->getType() == \ProtocolBuffers::TYPE_MESSAGE || $field->getType() == \ProtocolBuffers::TYPE_ENUM) {
+                    $printer->put(" * @see `see`\n",
+                        "see", str_replace(".", "\\", $field->getTypeName()));
+                }
+
+                if ($dict = SourceInfoDictionary::get($this->file->getName(), $this->descriptor->getName(), $field->getName())) {
+                    /* @var $dict \google\protobuf\SourceCodeInfo\Location */
+                    if ($dict->getTrailingComments()) {
+                        $printer->put(" *\n");
+                        $lines = preg_split("/\r?\n/", trim($dict->getTrailingComments()));
+                        foreach ($lines as $line) {
+                            if ($line[0] == " ") {
+                                $line = substr($line, 1);
+                            }
+                            $line = preg_replace("!\*/!", "", $line);
+                            $line = preg_replace("!/\*!", "//", $line);
+                            $line = preg_replace("! \*!", "//", $line);
+                            $printer->put(" * `comment`\n", "comment", $line);
+                        }
+                        $printer->put(" *\n");
+                    }
+                }
+
+                $printer->put(" **/\n");
                 $printer->put("protected \$`name`;\n",
                     "name",
                     $field->getName()
                 );
+                $printer->put("\n");
             }
         }
 
@@ -525,6 +571,21 @@ class MessageGenerator
             "filename",
             $this->file->getName()
         );
+
+        if ($dict = SourceInfoDictionary::get($this->file->getName(), $this->descriptor->getName(), "message")) {
+            /* @var $dict \google\protobuf\SourceCodeInfo\Location */
+            if ($dict->getLeadingComments()) {
+                $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
+                foreach ($lines as $line) {
+                    if ($line[0] == " ") {
+                        $line = substr($line, 1);
+                    }
+                    $printer->put(" * `comment`\n", "comment", $line);
+                }
+                $printer->put(" *\n");
+            }
+        }
+
         $this->printMagicMethod($printer);
         $printer->put(" */\n");
 

@@ -18,10 +18,20 @@ class ExtensionRange extends \ProtocolBuffers\Message
 {
   // @@protoc_insertion_point(traits:.google.protobuf.DescriptorProto.ExtensionRange)
   
-  /** @var string $start tag:1  optional */
+  /**
+   * @var string $start
+   * @tag 1
+   * @label optional
+   **/
   protected $start;
-  /** @var string $end tag:2  optional */
+  
+  /**
+   * @var string $end
+   * @tag 2
+   * @label optional
+   **/
   protected $end;
+  
   
   // @@protoc_insertion_point(properties_scope:.google.protobuf.DescriptorProto.ExtensionRange)
 

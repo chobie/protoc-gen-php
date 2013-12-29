@@ -18,12 +18,27 @@ class PHPFileOptions extends \ProtocolBuffers\Message
 {
   // @@protoc_insertion_point(traits:.PHPFileOptions)
   
-  /** @var bool $multiple_files tag:1  optional */
+  /**
+   * @var bool $multiple_files
+   * @tag 1
+   * @label optional
+   **/
   protected $multiple_files;
-  /** @var bool $skip_unknown tag:2  optional */
+  
+  /**
+   * @var bool $skip_unknown
+   * @tag 2
+   * @label optional
+   **/
   protected $skip_unknown;
-  /** @var string $base_class tag:3  optional */
+  
+  /**
+   * @var string $base_class
+   * @tag 3
+   * @label optional
+   **/
   protected $base_class;
+  
   
   // @@protoc_insertion_point(properties_scope:.PHPFileOptions)
 

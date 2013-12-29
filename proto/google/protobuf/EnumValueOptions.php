@@ -16,8 +16,16 @@ class EnumValueOptions extends \ProtocolBuffers\Message
 {
   // @@protoc_insertion_point(traits:.google.protobuf.EnumValueOptions)
   
-  /** @var array $uninterpreted_option tag:999  optional */
+  /**
+   * The parser stores options it doesn't recognize here. See above.
+   *
+   * @var array $uninterpreted_option
+   * @tag 999
+   * @label optional
+   * @see \google\protobuf\UninterpretedOption
+   **/
   protected $uninterpreted_option;
+  
   
   // @@protoc_insertion_point(properties_scope:.google.protobuf.EnumValueOptions)
 

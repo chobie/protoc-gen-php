@@ -20,12 +20,53 @@ class MessageOptions extends \ProtocolBuffers\Message
 {
   // @@protoc_insertion_point(traits:.google.protobuf.MessageOptions)
   
-  /** @var bool $message_set_wire_format tag:1  optional */
+  /**
+   * Set true to use the old proto1 MessageSet wire format for extensions.
+   * This is provided for backwards-compatibility with the MessageSet wire
+   * format.  You should not use this for any other reason:  It's less
+   * efficient, has fewer features, and is more complicated.
+   * 
+   * The message must be defined exactly as follows:
+   *   message Foo {
+   *     option message_set_wire_format = true;
+   *     extensions 4 to max;
+   *   }
+   * Note that the message cannot have any defined fields; MessageSets only
+   * have extensions.
+   * 
+   * All extensions of your type must be singular messages; e.g. they cannot
+   * be int32s, enums, or repeated messages.
+   * 
+   * Because this is an option, the above two restrictions are not enforced by
+   * the protocol compiler.
+   *
+   * @var bool $message_set_wire_format
+   * @tag 1
+   * @label optional
+   **/
   protected $message_set_wire_format;
-  /** @var bool $no_standard_descriptor_accessor tag:2  optional */
+  
+  /**
+   * Disables the generation of the standard "descriptor()" accessor, which can
+   * conflict with a field of the same name.  This is meant to make migration
+   * from proto1 easier; new code should avoid fields named "descriptor".
+   *
+   * @var bool $no_standard_descriptor_accessor
+   * @tag 2
+   * @label optional
+   **/
   protected $no_standard_descriptor_accessor;
-  /** @var array $uninterpreted_option tag:999  optional */
+  
+  /**
+   * The parser stores options it doesn't recognize here. See above.
+   *
+   * @var array $uninterpreted_option
+   * @tag 999
+   * @label optional
+   * @see \google\protobuf\UninterpretedOption
+   **/
   protected $uninterpreted_option;
+  
   
   // @@protoc_insertion_point(properties_scope:.google.protobuf.MessageOptions)
 

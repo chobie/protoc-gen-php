@@ -18,10 +18,26 @@ class EnumOptions extends \ProtocolBuffers\Message
 {
   // @@protoc_insertion_point(traits:.google.protobuf.EnumOptions)
   
-  /** @var bool $allow_alias tag:2  optional */
+  /**
+   * Set this option to false to disallow mapping different tag names to a same
+   * value.
+   *
+   * @var bool $allow_alias
+   * @tag 2
+   * @label optional
+   **/
   protected $allow_alias;
-  /** @var array $uninterpreted_option tag:999  optional */
+  
+  /**
+   * The parser stores options it doesn't recognize here. See above.
+   *
+   * @var array $uninterpreted_option
+   * @tag 999
+   * @label optional
+   * @see \google\protobuf\UninterpretedOption
+   **/
   protected $uninterpreted_option;
+  
   
   // @@protoc_insertion_point(properties_scope:.google.protobuf.EnumOptions)
 

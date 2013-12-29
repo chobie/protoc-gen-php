@@ -18,12 +18,27 @@ class PHPMessageOptions extends \ProtocolBuffers\Message
 {
   // @@protoc_insertion_point(traits:.PHPMessageOptions)
   
-  /** @var bool $use_single_property tag:2  optional */
+  /**
+   * @var bool $use_single_property
+   * @tag 2
+   * @label optional
+   **/
   protected $use_single_property;
-  /** @var string $single_property_name tag:3  optional */
+  
+  /**
+   * @var string $single_property_name
+   * @tag 3
+   * @label optional
+   **/
   protected $single_property_name;
-  /** @var bool $use_wakeup_and_sleep tag:4  optional */
+  
+  /**
+   * @var bool $use_wakeup_and_sleep
+   * @tag 4
+   * @label optional
+   **/
   protected $use_wakeup_and_sleep;
+  
   
   // @@protoc_insertion_point(properties_scope:.PHPMessageOptions)
 

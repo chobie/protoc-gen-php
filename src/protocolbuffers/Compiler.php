@@ -9,6 +9,7 @@
  */
 namespace protocolbuffers;
 
+use google\protobuf\compiler\CodeGeneratorRequest;
 use google\protobuf\DescriptorProto;
 use google\protobuf\EnumDescriptorProto;
 use google\protobuf\FieldDescriptorProto;
@@ -93,6 +94,86 @@ class Compiler
         }
     }
 
+    public function setupDictionary(CodeGeneratorRequest $req)
+    {
+        /* rough parsing, but works fine */
+
+        $result = array();
+        foreach ($req->getProtoFile() as $file) {
+            /* @var $file FileDescriptorProto */
+            $path  = $file->getName();
+            $lines = preg_split("/\r?\n/", file_get_contents($path));
+            $info = $file->getSourceCodeInfo();
+
+            $result[$file->getName()] = array();
+            $tmp_location = null;
+            $is_nested = true;
+            $type = 0;
+
+            $stack = array();
+            $tmp = array();
+            $prior = 0;
+
+            $llvel = 0;
+            $prior = array(
+                0, 0, 0
+            );
+            foreach ($info->getLocation() as $location) {
+                /* @var $location \google\protobuf\SourceCodeInfo\Location */
+                $path = $location->getPath();
+                $span = $location->getSpan();
+
+                if (empty($path)) {
+                    // whole entry
+                    continue;
+                }
+
+                $level = count($path);
+
+                if (count($path) % 2 == 0 && $path[0] == 4) {
+                    if ($prior[0] >= $level) {
+                        array_pop($stack);
+                        $prior[0] = $level-1;
+                    }
+
+                    // whole
+                    $name = substr($lines[$span[0]], $span[1], $span[2] - $span[1]);
+
+                    if (preg_match("/^message/i", $name)) {
+                        $stack[] = array(
+                            "name" => $name,
+                            "info" => $location,
+                        );
+                        $prior[0] = $level;
+                    } else if (preg_match("/^enum/i", $name)) {
+                        $stack[] = array(
+                            "name" => $name,
+                            "info" => $location,
+                        );
+                        $prior[0] = $level;
+                    } else {
+                        $tmp[] = $location;
+                    }
+                }
+
+                if (count($path) % 2 == 1 && $path[0] == 4 && $path[count($path)-1] == 1) {
+                    // name
+                    $name = substr($lines[$span[0]], $span[1], $span[2] - $span[1]);
+                    // TODO(chobie): fix warnings
+                    @list($dummy, $n, $dummy) = explode(" ", $stack[count($stack)-1]['name']);
+
+                    if ($name == $n) { // message or enum
+                        $result[$file->getName()][$n]["message"] = $stack[count($stack)-1]['info'];
+                    } else {
+                        $result[$file->getName()][$n][$name] = @$tmp[count($tmp)-1];
+                        array_pop($tmp);
+                    }
+                }
+            }
+        }
+        SourceInfoDictionary::register($result);
+    }
+
     /**
      * @param $input raw protocol buffers message
      * @return \google\protobuf\compiler\CodeGeneratorResponse
@@ -103,6 +184,7 @@ class Compiler
 
         $req = \ProtocolBuffers::decode('google\protobuf\compiler\CodeGeneratorRequest', $input);
         $this->setupFullName($req);
+        $this->setupDictionary($req);
         /* @var $req \google\protobuf\compiler\CodeGeneratorRequest */
 
         $parameter = array();
