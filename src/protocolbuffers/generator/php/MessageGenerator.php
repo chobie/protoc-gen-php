@@ -414,6 +414,69 @@ class MessageGenerator
 
     }
 
+    public function printExtension(Printer $printer, FieldDescriptorProto $field)
+    {
+        $printer->put("\$registry->add(`message`, `extension`, new \\ProtocolBuffers\\FieldDescriptor(array(\n",
+            "message", $this->getTypeName($field),
+            "extension", $field->getNumber()
+        );
+        $printer->indent();
+        $printer->put("\"type\"     => `type`,\n",
+            "type",
+            self::$fields_map[$field->getType()]);
+        $printer->put("\"name\"     => \"`name`\",\n",
+            "name",
+            $field->getName());
+        $printer->put("\"required\" => `required`,\n",
+            "required",
+            ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REQUIRED) ? "true" : "false");
+        $printer->put("\"optional\" => `optional`,\n",
+            "optional",
+            ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_OPTIONAL) ? "true" : "false");
+        $printer->put("\"repeated\" => `repeated`,\n",
+            "repeated",
+            ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED) ? "true" : "false");
+
+        $options = $field->getOptions();
+        if ($options) {
+            $printer->put("\"packable\" => `packable`,\n",
+                "packable",
+                ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED &&
+                    $field->getOptions()->getPacked()) ? "true" : "false");
+        } else {
+            $printer->put("\"packable\" => `packable`,\n",
+                "packable",
+                "false");
+        }
+        $printer->put("\"default\"  => `value`,\n",
+            "value",
+            $this->defaultValueAsString($field));
+
+        if ($field->getType() == \google\protobuf\FieldDescriptorProto\Type::TYPE_MESSAGE) {
+            $name = $field->getTypeName();
+
+            $descriptor = MessagePool::get($name);
+            $printer->put("\"message\" => \"`message`\",\n",
+                "message",
+                str_replace(".", "\\\\", $descriptor->full_name)
+            );
+        }
+
+        $printer->outdent();
+        $printer->put(")));\n");
+    }
+
+    public function printExtensions()
+    {
+        if ($this->file->getExtension()) {
+            $printer = new Printer($this->context->openForInsert("autoload.php", "extension_scope:registry"), "`");
+            foreach ($this->file->getExtension() as $ext) {
+                $this->printExtension($printer, $ext);
+            }
+        }
+    }
+
+
     public function generate(Printer $printer)
     {
         foreach ($this->descriptor->getEnumType() as $enum) {

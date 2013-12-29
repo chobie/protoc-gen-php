@@ -81,7 +81,6 @@ class FileGenerator
         return $output;
     }
 
-
     public function generateAutoloader(Printer $printer, $file_list, $append_mode = false)
     {
         if (!$append_mode) {
