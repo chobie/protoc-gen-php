@@ -13,7 +13,7 @@ require  __DIR__ . '/../../vendor/autoload.php';
 
 
 $stdin =  stream_get_contents(STDIN);
-file_put_contents("dat", $stdin);
+//file_put_contents("dat", $stdin);
 
 //$stdin = file_get_contents("dat");
 $compiler = new \protocolbuffers\Compiler();
