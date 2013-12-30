@@ -28,10 +28,19 @@ class PragmaticInserter
     public static function execute(DescriptorProto $descriptor, GeneratorContext $context)
     {
         foreach (self::$data as $block) {
-            if ($descriptor->getName() == $block['match']) {
-                if ($context->hasOpened($block['file'])) {
-                    $printer = new Printer($context->openForInsert($block['file'], $block['insertion_point']), "`");
+            $regex = sprintf("/%s/", $block['match']);
+            if (preg_match($regex, $descriptor->getName(), $match)) {
+                $file_name = $block['file'];
+                $insertion_point = $block['insertion_point'];
 
+                $count = count($match);
+                for ($i = 0; $i < $count; $i++) {
+                    $file_name = str_replace("\$$i", $match[0], $file_name);
+                    $insertion_point = str_replace("\$$i", $match[0], $insertion_point);
+                }
+
+                if ($context->hasOpened($file_name)) {
+                    $printer = new Printer($context->openForInsert($file_name, $insertion_point), "`");
                     $lines = preg_split("/\r?\n/", $block['insertion']);
                     foreach ($lines as $line) {
                         $printer->put($line . PHP_EOL);

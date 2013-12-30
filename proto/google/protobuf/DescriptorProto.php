@@ -100,6 +100,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
     }
     return $parent;
   }
+  
   // @@protoc_insertion_point(class_scope:.google.protobuf.DescriptorProto)
 
   /**
