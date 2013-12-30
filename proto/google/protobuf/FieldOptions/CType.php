@@ -8,7 +8,7 @@ namespace google\protobuf\FieldOptions;
  * source: google/protobuf/descriptor.proto
  *
  */
-class CType
+class CType extends \ProtocolBuffers\Enum
 {
   const STRING = 0;
   const CORD = 1;

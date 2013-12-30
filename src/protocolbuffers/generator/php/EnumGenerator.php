@@ -54,7 +54,7 @@ class EnumGenerator extends MessageGenerator
         );
         $printer->put(" */\n");
 
-        $printer->put("class `name`\n{\n",
+        $printer->put("class `name` extends \\ProtocolBuffers\\Enum\n{\n",
             "name",
             $this->descriptor->getName()
         );

@@ -8,7 +8,7 @@ namespace google\protobuf\FieldDescriptorProto;
  * source: google/protobuf/descriptor.proto
  *
  */
-class Type
+class Type extends \ProtocolBuffers\Enum
 {
   const TYPE_DOUBLE = 1;
   const TYPE_FLOAT = 2;

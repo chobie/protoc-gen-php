@@ -8,7 +8,7 @@ namespace google\protobuf\FileOptions;
  * source: google/protobuf/descriptor.proto
  *
  */
-class OptimizeMode
+class OptimizeMode extends \ProtocolBuffers\Enum
 {
   const SPEED = 1;
   const CODE_SIZE = 2;

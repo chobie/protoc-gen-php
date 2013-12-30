@@ -8,7 +8,7 @@ namespace google\protobuf\FieldDescriptorProto;
  * source: google/protobuf/descriptor.proto
  *
  */
-class Label
+class Label extends \ProtocolBuffers\Enum
 {
   const LABEL_OPTIONAL = 1;
   const LABEL_REQUIRED = 2;
