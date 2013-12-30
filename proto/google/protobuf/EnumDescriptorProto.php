@@ -48,7 +48,9 @@ class EnumDescriptorProto extends \ProtocolBuffers\Message
   // @@protoc_insertion_point(properties_scope:.google.protobuf.EnumDescriptorProto)
 
   /**
-   * @return \google\protobuf\FileDescriptorProto
+   *  helper method for retriviing parent FileDescriptorProto message
+   *
+   *  @return \google\protobuf\FileDescriptorProto
    */
   public function file()
   {

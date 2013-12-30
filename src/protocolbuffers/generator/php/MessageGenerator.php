@@ -15,7 +15,9 @@ use protocolbuffers\ExtensionPool;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 use protocolbuffers\MessagePool;
+use protocolbuffers\PragmaticInserter;
 use protocolbuffers\SourceInfoDictionary;
+use Symfony\Component\Yaml\Yaml;
 
 class MessageGenerator
 {
@@ -608,34 +610,7 @@ class MessageGenerator
 
         $this->printExtensions();
 
-        // for now.
-        if (($this->descriptor->getName() == "DescriptorProto" && $this->context->hasOpened("/google/protobuf/DescriptorProto.php")) ||
-            ($this->descriptor->getName() == "EnumDescriptorProto" && $this->context->hasOpened("/google/protobuf/EnumDescriptorProto.php"))
-        ) {
-            if ($this->descriptor->getName() == "EnumDescriptorProto") {
-                $printer = new Printer($this->context->openForInsert("/google/protobuf/EnumDescriptorProto.php", "class_scope:.google.protobuf.EnumDescriptorProto"), "`");
-            } else {
-                $printer = new Printer($this->context->openForInsert("/google/protobuf/DescriptorProto.php", "class_scope:.google.protobuf.DescriptorProto"), "`");
-            }
-
-            $printer->put("/**\n");
-            $printer->put(" * @return \\google\\protobuf\\FileDescriptorProto\n");
-            $printer->put(" */\n");
-            $printer->put("public function file()\n");
-            $printer->put("{\n");
-            $printer->indent();
-            $printer->put("\$parent = \$this->containerOf();\n");
-            $printer->put("while (\$parent && !(\$parent instanceof \\google\\protobuf\\FileDescriptorProto)) {\n");
-            $printer->indent();
-            $printer->put("\$parent = \$parent->containerOf();\n");
-            $printer->outdent();
-            $printer->put("}\n");
-            $printer->put("return \$parent;\n");
-            $printer->outdent();
-            $printer->put("}\n");
-            $printer->put("\n");
-        }
-
+        PragmaticInserter::execute($this->descriptor, $this->context);
     }
 }
 

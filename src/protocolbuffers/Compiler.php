@@ -195,7 +195,7 @@ class Compiler
         $gen = new Generator();
         $error = new StringStream();
 
-        //error_log(var_export($req->getFileToGenerate(), true));
+        PragmaticInserter::loadYaml(".protoc.php.yml");
         foreach ($req->getProtoFile() as $file_descriptor) {
             if(!in_array($file_descriptor->getName(), $req->getFileToGenerate())) {
                 error_log($file_descriptor->getName());

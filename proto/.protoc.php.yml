@@ -1,0 +1,36 @@
+-
+  match: "DescriptorProto"
+  file: "/google/protobuf/DescriptorProto.php"
+  insertion_point: "class_scope:.google.protobuf.DescriptorProto"
+  insertion: |
+    /**
+     *  helper method for retriviing parent FileDescriptorProto message
+     *
+     *  @return \google\protobuf\FileDescriptorProto
+     */
+    public function file()
+    {
+      $parent = $this->containerOf();
+      while ($parent && !($parent instanceof \google\protobuf\FileDescriptorProto)) {
+        $parent = $parent->containerOf();
+      }
+      return $parent;
+    }
+-
+  match: "EnumDescriptorProto"
+  file: "/google/protobuf/EnumDescriptorProto.php"
+  insertion_point: "class_scope:.google.protobuf.EnumDescriptorProto"
+  insertion: |
+    /**
+     *  helper method for retriviing parent FileDescriptorProto message
+     *
+     *  @return \google\protobuf\FileDescriptorProto
+     */
+    public function file()
+    {
+      $parent = $this->containerOf();
+      while ($parent && !($parent instanceof \google\protobuf\FileDescriptorProto)) {
+        $parent = $parent->containerOf();
+      }
+      return $parent;
+    }

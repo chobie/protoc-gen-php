@@ -13,6 +13,7 @@ namespace protocolbuffers\generator\php;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 use protocolbuffers\StringStream;
+use Symfony\Component\Yaml\Yaml;
 
 class Generator
 {

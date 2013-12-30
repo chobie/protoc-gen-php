@@ -88,7 +88,9 @@ class DescriptorProto extends \ProtocolBuffers\Message
   // @@protoc_insertion_point(properties_scope:.google.protobuf.DescriptorProto)
 
   /**
-   * @return \google\protobuf\FileDescriptorProto
+   *  helper method for retriviing parent FileDescriptorProto message
+   *
+   *  @return \google\protobuf\FileDescriptorProto
    */
   public function file()
   {
@@ -98,7 +100,6 @@ class DescriptorProto extends \ProtocolBuffers\Message
     }
     return $parent;
   }
-  
   // @@protoc_insertion_point(class_scope:.google.protobuf.DescriptorProto)
 
   /**
