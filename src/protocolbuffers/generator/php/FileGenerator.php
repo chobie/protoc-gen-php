@@ -35,10 +35,12 @@ class FileGenerator
             $file_list = array();
 
             foreach ($this->file->getEnumType() as $enum) {
+                $gen = new EnumGenerator($this->context, $enum, $file_list);
+                $gen->generate($printer);
             }
 
             foreach ($this->file->getMessageType() as $message) {
-                $gen = new MessageGenerator($this->context, $this->file, $message, $file_list);
+                $gen = new MessageGenerator($this->context, $message, $file_list);
                 $gen->generate($printer);
             }
         } else {

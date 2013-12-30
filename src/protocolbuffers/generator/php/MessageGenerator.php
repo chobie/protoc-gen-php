@@ -404,7 +404,7 @@ class MessageGenerator
                 $value = $field->getTypeName();
                 $descriptor = MessagePool::get($value);
 
-                if ($field->getLabel() != FieldDescriptorProto\Label::LABEL_REPEATED) {
+                if (FieldDescriptorProto\Label::isRepeated($field)) {
                     $def = $field->getDefaultValue();
                     if (!empty($def)) {
                         $value = str_replace(".", "\\", $descriptor->full_name). "::" . $field->getDefaultValue();
