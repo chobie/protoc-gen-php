@@ -13,4 +13,26 @@ class CType extends \ProtocolBuffers\Enum
   const STRING = 0;
   const CORD = 1;
   const STRING_PIECE = 2;
+  
+  public static function getEnumDescriptor()
+  {
+    static $descriptor;
+    if (!$descriptor) {
+      $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 0,
+        "name"  => 'STRING',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 1,
+        "name"  => 'CORD',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 2,
+        "name"  => 'STRING_PIECE',
+      )));
+      $descriptor = $builder->build();
+    }
+    return $descriptor;
+  }
 }

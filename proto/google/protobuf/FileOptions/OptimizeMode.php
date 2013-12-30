@@ -13,4 +13,26 @@ class OptimizeMode extends \ProtocolBuffers\Enum
   const SPEED = 1;
   const CODE_SIZE = 2;
   const LITE_RUNTIME = 3;
+  
+  public static function getEnumDescriptor()
+  {
+    static $descriptor;
+    if (!$descriptor) {
+      $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 1,
+        "name"  => 'SPEED',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 2,
+        "name"  => 'CODE_SIZE',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 3,
+        "name"  => 'LITE_RUNTIME',
+      )));
+      $descriptor = $builder->build();
+    }
+    return $descriptor;
+  }
 }

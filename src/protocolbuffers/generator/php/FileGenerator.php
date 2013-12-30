@@ -140,7 +140,7 @@ class FileGenerator
                 $file_list[] = $path;
 
                 $printer = new Printer($output, "`");
-                $gen = new EnumGenerator($context, $this->file, $enum, $file_list);
+                $gen = new EnumGenerator($context, $enum, $file_list);
                 $gen->generate($printer);
             }
 

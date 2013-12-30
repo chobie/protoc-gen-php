@@ -28,4 +28,86 @@ class Type extends \ProtocolBuffers\Enum
   const TYPE_SFIXED64 = 16;
   const TYPE_SINT32 = 17;
   const TYPE_SINT64 = 18;
+  
+  public static function getEnumDescriptor()
+  {
+    static $descriptor;
+    if (!$descriptor) {
+      $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 1,
+        "name"  => 'TYPE_DOUBLE',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 2,
+        "name"  => 'TYPE_FLOAT',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 3,
+        "name"  => 'TYPE_INT64',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 4,
+        "name"  => 'TYPE_UINT64',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 5,
+        "name"  => 'TYPE_INT32',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 6,
+        "name"  => 'TYPE_FIXED64',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 7,
+        "name"  => 'TYPE_FIXED32',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 8,
+        "name"  => 'TYPE_BOOL',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 9,
+        "name"  => 'TYPE_STRING',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 10,
+        "name"  => 'TYPE_GROUP',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 11,
+        "name"  => 'TYPE_MESSAGE',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 12,
+        "name"  => 'TYPE_BYTES',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 13,
+        "name"  => 'TYPE_UINT32',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 14,
+        "name"  => 'TYPE_ENUM',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 15,
+        "name"  => 'TYPE_SFIXED32',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 16,
+        "name"  => 'TYPE_SFIXED64',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 17,
+        "name"  => 'TYPE_SINT32',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 18,
+        "name"  => 'TYPE_SINT64',
+      )));
+      $descriptor = $builder->build();
+    }
+    return $descriptor;
+  }
 }

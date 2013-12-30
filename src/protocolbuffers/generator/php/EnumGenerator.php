@@ -68,6 +68,33 @@ class EnumGenerator extends MessageGenerator
             );
         }
 
+        $printer->put("\n");
+
+        $printer->put("public static function getEnumDescriptor()\n");
+        $printer->put("{\n");
+        $printer->indent();
+        $printer->put("static \$descriptor;\n");
+        $printer->put("if (!\$descriptor) {\n");
+        $printer->indent();
+        $printer->put("\$builder = new \\ProtocolBuffers\\EnumDescriptorBuilder();\n");
+        foreach ($this->descriptor->getValue() as $value) {
+            $printer->put("\$builder->addValue(new \\ProtocolBuffers\\EnumValueDescriptor(array(\n");
+            $printer->indent();
+            $printer->put("\"value\" => `value`,\n",
+                "value", $value->getNumber());
+            $printer->put("\"name\"  => '`name`',\n",
+                "name", $value->getName());
+            $printer->outdent();
+            $printer->put(")));\n");
+        }
+        $printer->put("\$descriptor = \$builder->build();\n");
+
+        $printer->outdent();
+        $printer->put("}\n");
+        $printer->put("return \$descriptor;\n");
+        $printer->outdent();
+        $printer->put("}\n");
+
 
         $printer->outdent();
         $printer->put("}\n");

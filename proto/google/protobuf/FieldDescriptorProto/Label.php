@@ -13,4 +13,26 @@ class Label extends \ProtocolBuffers\Enum
   const LABEL_OPTIONAL = 1;
   const LABEL_REQUIRED = 2;
   const LABEL_REPEATED = 3;
+  
+  public static function getEnumDescriptor()
+  {
+    static $descriptor;
+    if (!$descriptor) {
+      $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 1,
+        "name"  => 'LABEL_OPTIONAL',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 2,
+        "name"  => 'LABEL_REQUIRED',
+      )));
+      $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
+        "value" => 3,
+        "name"  => 'LABEL_REPEATED',
+      )));
+      $descriptor = $builder->build();
+    }
+    return $descriptor;
+  }
 }
