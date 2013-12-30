@@ -52,16 +52,14 @@ class MessageGenerator
     );
 
     public function __construct(GeneratorContext $context,
-                                \google\protobuf\FileDescriptorProto $file,
                                 \google\protobuf\DescriptorProto $descriptor,
                                 &$file_list)
     {
-        $this->file = $file;
         $this->descriptor = $descriptor;
         $this->context = $context;
         $this->file_list = &$file_list;
 
-        if ($file->getOptions()->getExtension("php")->getMultipleFiles()) {
+        if ($descriptor->file()->getOptions()->getExtension("php")->getMultipleFiles()) {
             $this->enclose_namespace_ = false;
         } else {
             $this->enclose_namespace_ = true;
@@ -137,7 +135,7 @@ class MessageGenerator
                 /* @var $field \google\protobuf\FieldDescriptorProto */
 
                 $printer->put("/**\n");
-                if ($dict = SourceInfoDictionary::get($this->file->getName(), $this->descriptor->getName(), $field->getName())) {
+                if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(), $this->descriptor->getName(), $field->getName())) {
                     /* @var $dict \google\protobuf\SourceCodeInfo\Location */
                     if ($dict->getLeadingComments()) {
                         $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
@@ -167,7 +165,7 @@ class MessageGenerator
                         "see", str_replace(".", "\\", $field->getTypeName()));
                 }
 
-                if ($dict = SourceInfoDictionary::get($this->file->getName(), $this->descriptor->getName(), $field->getName())) {
+                if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(), $this->descriptor->getName(), $field->getName())) {
                     /* @var $dict \google\protobuf\SourceCodeInfo\Location */
                     if ($dict->getTrailingComments()) {
                         $printer->put(" *\n");
@@ -523,21 +521,20 @@ class MessageGenerator
 
     public function printExtensions()
     {
-        if ($this->file->get("extension")) {
+        if ($this->descriptor->file()->get("extension")) {
             $printer = new Printer($this->context->openForInsert("autoload.php", "extension_scope:registry"), "`");
-            foreach ($this->file->get("extension") as $ext) {
+            foreach ($this->descriptor->file()->get("extension") as $ext) {
                 $this->printExtension($printer, $ext);
             }
         }
     }
 
-
     public function generate(Printer $printer)
     {
         foreach ($this->descriptor->getEnumType() as $enum) {
-            $generator = new EnumGenerator($this->context, $this->file, $enum, $this->file_list);
+            $generator = new EnumGenerator($this->context, $enum, $this->file_list);
 
-            if ($this->file->getOptions()->GetExtension("php")->getMultipleFiles()) {
+            if ($this->descriptor->file()->getOptions()->GetExtension("php")->getMultipleFiles()) {
                 $child_name = $generator->fileName();
                 $this->file_list[] = $child_name;
                 $child_printer = new Printer($this->context->open($child_name), "`");
@@ -546,18 +543,17 @@ class MessageGenerator
         }
 
         foreach ($this->descriptor->getNestedType() as $message) {
-            $generator = new MessageGenerator($this->context, $this->file, $message, $this->file_list);
+            $generator = new MessageGenerator($this->context, $message, $this->file_list);
 
-            if ($this->file->getOptions()->GetExtension("php")->getMultipleFiles()) {
+            if ($this->descriptor->file()->getOptions()->GetExtension("php")->getMultipleFiles()) {
                 $child_name = $generator->fileName();
                 $this->file_list[] = $child_name;
                 $child_printer = new Printer($this->context->open($child_name), "`");
                 $generator->generate($child_printer);
             }
-
         }
 
-        if ($this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
+        if ($this->descriptor->file()->getOptions()->getExtension("php")->getMultipleFiles()) {
             $printer->put("<?php\n");
         }
 
@@ -569,10 +565,10 @@ class MessageGenerator
             " * source: `filename`\n" .
             " *\n",
             "filename",
-            $this->file->getName()
+            $this->descriptor->file()->getName()
         );
 
-        if ($dict = SourceInfoDictionary::get($this->file->getName(), $this->descriptor->getName(), "message")) {
+        if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(), $this->descriptor->getName(), "message")) {
             /* @var $dict \google\protobuf\SourceCodeInfo\Location */
             if ($dict->getLeadingComments()) {
                 $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
@@ -611,6 +607,35 @@ class MessageGenerator
         }
 
         $this->printExtensions();
+
+        // for now.
+        if (($this->descriptor->getName() == "DescriptorProto" && $this->context->hasOpened("/google/protobuf/DescriptorProto.php")) ||
+            ($this->descriptor->getName() == "EnumDescriptorProto" && $this->context->hasOpened("/google/protobuf/EnumDescriptorProto.php"))
+        ) {
+            if ($this->descriptor->getName() == "EnumDescriptorProto") {
+                $printer = new Printer($this->context->openForInsert("/google/protobuf/EnumDescriptorProto.php", "class_scope:.google.protobuf.EnumDescriptorProto"), "`");
+            } else {
+                $printer = new Printer($this->context->openForInsert("/google/protobuf/DescriptorProto.php", "class_scope:.google.protobuf.DescriptorProto"), "`");
+            }
+
+            $printer->put("/**\n");
+            $printer->put(" * @return \\google\\protobuf\\FileDescriptorProto\n");
+            $printer->put(" */\n");
+            $printer->put("public function file()\n");
+            $printer->put("{\n");
+            $printer->indent();
+            $printer->put("\$parent = \$this->containerOf();\n");
+            $printer->put("while (\$parent && !(\$parent instanceof \\google\\protobuf\\FileDescriptorProto)) {\n");
+            $printer->indent();
+            $printer->put("\$parent = \$parent->containerOf();\n");
+            $printer->outdent();
+            $printer->put("}\n");
+            $printer->put("return \$parent;\n");
+            $printer->outdent();
+            $printer->put("}\n");
+            $printer->put("\n");
+        }
+
     }
 }
 

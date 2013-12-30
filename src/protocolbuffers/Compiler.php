@@ -170,6 +170,8 @@ class Compiler
                     }
                 }
             }
+            // remove source code info
+            $file->clearSourceCodeInfo();
         }
         SourceInfoDictionary::register($result);
     }

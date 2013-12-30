@@ -152,7 +152,7 @@ class FileGenerator
                 $file_list[] = $path;
 
                 $printer = new Printer($output, "`");
-                $gen = new MessageGenerator($context, $this->file, $message, $file_list);
+                $gen = new MessageGenerator($context, $message, $file_list);
                 $gen->generate($printer);
             }
 

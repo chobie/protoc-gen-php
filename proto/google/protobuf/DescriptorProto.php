@@ -87,6 +87,18 @@ class DescriptorProto extends \ProtocolBuffers\Message
   
   // @@protoc_insertion_point(properties_scope:.google.protobuf.DescriptorProto)
 
+  /**
+   * @return \google\protobuf\FileDescriptorProto
+   */
+  public function file()
+  {
+    $parent = $this->containerOf();
+    while ($parent && !($parent instanceof \google\protobuf\FileDescriptorProto)) {
+      $parent = $parent->containerOf();
+    }
+    return $parent;
+  }
+  
   // @@protoc_insertion_point(class_scope:.google.protobuf.DescriptorProto)
 
   /**

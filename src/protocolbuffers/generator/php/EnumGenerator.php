@@ -17,16 +17,14 @@ use protocolbuffers\io\Printer;
 class EnumGenerator extends MessageGenerator
 {
     public function __construct(GeneratorContext $context,
-                                \google\protobuf\FileDescriptorProto $file,
                                 \google\protobuf\EnumDescriptorProto $descriptor,
                                 &$file_list)
     {
-        $this->file = $file;
         $this->descriptor = $descriptor;
         $this->context = $context;
         $this->file_list = &$file_list;
 
-        if ($file->getOptions()->getExtension("php")->getMultipleFiles()) {
+        if ($descriptor->file()->getOptions()->getExtension("php")->getMultipleFiles()) {
             $this->enclose_namespace_ = false;
         } else {
             $this->enclose_namespace_ = true;
@@ -40,7 +38,7 @@ class EnumGenerator extends MessageGenerator
 
     public function generate(Printer $printer)
     {
-        if ($this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
+        if ($this->descriptor->file()->getOptions()->getExtension("php")->getMultipleFiles()) {
             $printer->put("<?php\n");
         }
 
@@ -52,7 +50,7 @@ class EnumGenerator extends MessageGenerator
             " * source: `filename`\n" .
             " *\n",
             "filename",
-            $this->file->getName()
+            $this->descriptor->file()->getName()
         );
         $printer->put(" */\n");
 

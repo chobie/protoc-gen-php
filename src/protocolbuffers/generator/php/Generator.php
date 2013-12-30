@@ -46,8 +46,6 @@ class Generator
                 $file_generator->generateAutoloader($printer, array(), $append_mode);
             }
 
-
-
             if (Helper::IsPackageNameOverriden($file)) {
                 $package_name = Helper::getPackageName($file);
             } else {
