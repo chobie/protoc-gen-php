@@ -48,6 +48,16 @@ class Type extends \ProtocolBuffers\Enum
   
   // @@protoc_insertion_point(const_scope:.google.protobuf.FieldDescriptorProto.Type)
   
+  public static function isMessage(\google\protobuf\FieldDescriptorProto $field)
+  {
+    return self::TYPE_MESSAGE == $field->getType();
+  }
+  
+  public static function isEnum(\google\protobuf\FieldDescriptorProto $field)
+  {
+    return self::TYPE_ENUM == $field->getType();
+  }
+  
   // @@protoc_insertion_point(class_scope:.google.protobuf.FieldDescriptorProto.Type)
   
   public static function getEnumDescriptor()

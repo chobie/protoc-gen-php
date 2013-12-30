@@ -13,6 +13,7 @@ namespace protocolbuffers\generator\php;
 use google\protobuf\EnumValueDescriptorProto;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
+use protocolbuffers\PragmaticInserter;
 use protocolbuffers\SourceInfoDictionary;
 
 class EnumGenerator extends MessageGenerator
@@ -140,5 +141,7 @@ class EnumGenerator extends MessageGenerator
             $printer->outdent();
             $printer->put("}\n\n");
         }
+
+        PragmaticInserter::execute($this->descriptor, $this->context);
     }
 }

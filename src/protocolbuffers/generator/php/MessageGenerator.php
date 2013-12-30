@@ -11,6 +11,7 @@
 namespace protocolbuffers\generator\php;
 
 use google\protobuf\FieldDescriptorProto;
+use JsonSchema\Constraints\Type;
 use protocolbuffers\ExtensionPool;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
@@ -159,10 +160,11 @@ class MessageGenerator
                 $printer->put(" * @tag `tag`\n",
                     "tag", $field->getNumber());
                 $printer->put(" * @label `required`\n",
-                    "required", ($field->getLabel() == FieldDescriptorProto\Label::LABEL_REQUIRED ? "required" : "optional"));
+                    "required", (FieldDescriptorProto\Label::isRequired($field) ? "required" : "optional"));
 
-                if ($field->getLabel() == FieldDescriptorProto\Label::LABEL_REPEATED &&
-                    $field->getType() == \ProtocolBuffers::TYPE_MESSAGE || $field->getType() == \ProtocolBuffers::TYPE_ENUM) {
+                if (FieldDescriptorProto\Label::isRepeated($field) &&
+                        FieldDescriptorProto\Type::isMessage($field) ||
+                        FieldDescriptorProto\Type::isEnum($field)) {
                     $printer->put(" * @see `see`\n",
                         "see", str_replace(".", "\\", $field->getTypeName()));
                 }
@@ -237,20 +239,19 @@ class MessageGenerator
                 $field->getName());
             $printer->put("\"required\" => `required`,\n",
                 "required",
-                ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REQUIRED) ? "true" : "false");
+                (FieldDescriptorProto\Label::isRequired($field)) ? "true" : "false");
             $printer->put("\"optional\" => `optional`,\n",
                 "optional",
-                ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_OPTIONAL) ? "true" : "false");
+                (FieldDescriptorProto\Label::isOptional($field)) ? "true" : "false");
             $printer->put("\"repeated\" => `repeated`,\n",
                 "repeated",
-                ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED) ? "true" : "false");
+                (FieldDescriptorProto\Label::isRepeated($field)) ? "true" : "false");
 
             $options = $field->getOptions();
             if ($options) {
                 $printer->put("\"packable\" => `packable`,\n",
                     "packable",
-                    ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED &&
-                        $field->getOptions()->getPacked()) ? "true" : "false");
+                    (FieldDescriptorProto\Label::isPacked($field)) ? "true" : "false");
             } else {
                 $printer->put("\"packable\" => `packable`,\n",
                     "packable",
@@ -260,7 +261,7 @@ class MessageGenerator
                 "value",
                 $this->defaultValueAsString($field));
 
-            if ($field->getType() == \google\protobuf\FieldDescriptorProto\Type::TYPE_MESSAGE) {
+            if (FieldDescriptorProto\Type::isMessage($field)) {
                 $name = $field->getTypeName();
 
                 $descriptor = MessagePool::get($name);
@@ -319,7 +320,7 @@ class MessageGenerator
 
     public function getTypeName(FieldDescriptorProto $field)
     {
-        if ($field->getLabel() == FieldDescriptorProto\Label::LABEL_REPEATED) {
+        if (FieldDescriptorProto\Label::isRepeated($field)) {
             return "array";
         }
 
@@ -446,7 +447,7 @@ class MessageGenerator
                 "variable", Helper::cameraize($field->getName())
             );
 
-            if ($field->getLabel() == FieldDescriptorProto\Label::LABEL_REPEATED) {
+            if (FieldDescriptorProto\Label::isRepeated($field)) {
                 $printer->put(" * @method void append`variable`(`type2` \$value)\n",
                     "type", $this->getTypeName($field),
                     "variable", Helper::cameraize($field->getName()),
@@ -484,30 +485,21 @@ class MessageGenerator
             $field->getName());
         $printer->put("\"required\" => `required`,\n",
             "required",
-            ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REQUIRED) ? "true" : "false");
+            (FieldDescriptorProto\Label::isRequired($field)) ? "true" : "false");
         $printer->put("\"optional\" => `optional`,\n",
             "optional",
-            ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_OPTIONAL) ? "true" : "false");
+            (FieldDescriptorProto\Label::isOptional($field)) ? "true" : "false");
         $printer->put("\"repeated\" => `repeated`,\n",
             "repeated",
-            ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED) ? "true" : "false");
-
-        $options = $field->getOptions();
-        if ($options) {
-            $printer->put("\"packable\" => `packable`,\n",
-                "packable",
-                ($field->getLabel() == \google\protobuf\FieldDescriptorProto\Label::LABEL_REPEATED &&
-                    $field->getOptions()->getPacked()) ? "true" : "false");
-        } else {
-            $printer->put("\"packable\" => `packable`,\n",
-                "packable",
-                "false");
-        }
+            (FieldDescriptorProto\Label::isRepeated($field)) ? "true" : "false");
+        $printer->put("\"packable\" => `packable`,\n",
+            "packable",
+            (FieldDescriptorProto\Label::isPacked($field)) ? "true" : "false");
         $printer->put("\"default\"  => `value`,\n",
             "value",
             $this->defaultValueAsString($field));
 
-        if ($field->getType() == \google\protobuf\FieldDescriptorProto\Type::TYPE_MESSAGE) {
+        if (FieldDescriptorProto\Type::isMessage($field)) {
             $name = $field->getTypeName();
 
             $descriptor = MessagePool::get($name);

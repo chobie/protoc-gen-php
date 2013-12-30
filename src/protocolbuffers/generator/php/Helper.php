@@ -12,6 +12,7 @@ namespace protocolbuffers\generator\php;
 use google\protobuf\DescriptorProto;
 use google\protobuf\FieldDescriptorProto;
 use google\protobuf\FileDescriptorProto;
+use JsonSchema\Constraints\Type;
 
 class Helper
 {
@@ -22,7 +23,7 @@ class Helper
 
     public static function getFullQualifiedTypeName(FieldDescriptorProto $field, DescriptorProto $descriptor, FileDescriptorProto $file)
     {
-        if ($field->getType() == \ProtocolBuffers::TYPE_MESSAGE || $field->getType() == \ProtocolBuffers::TYPE_ENUM) {
+        if (FieldDescriptorProto\Type::isMessage($field) || FieldDescriptorProto\Type::isEnum($field)) {
             $name = $field->getTypeName();
             if (strlen($name) < 1) {
                 return null;
@@ -39,7 +40,6 @@ class Helper
 
         return $name;
     }
-
 
     public static function phppackage(FileDescriptorProto $file)
     {

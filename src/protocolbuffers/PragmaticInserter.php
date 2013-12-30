@@ -25,7 +25,7 @@ class PragmaticInserter
         }
     }
 
-    public static function execute(DescriptorProto $descriptor, GeneratorContext $context)
+    public static function execute($descriptor, GeneratorContext $context)
     {
         foreach (self::$data as $block) {
             $regex = sprintf("/%s/", $block['match']);

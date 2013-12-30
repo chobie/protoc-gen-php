@@ -21,6 +21,26 @@ class Label extends \ProtocolBuffers\Enum
   
   // @@protoc_insertion_point(const_scope:.google.protobuf.FieldDescriptorProto.Label)
   
+  public static function isRequired(\google\protobuf\FieldDescriptorProto $field)
+  {
+    return self::LABEL_REQUIRED == $field->getLabel();
+  }
+  
+  public static function isOptional(\google\protobuf\FieldDescriptorProto $field)
+  {
+    return self::LABEL_OPTIONAL == $field->getLabel();
+  }
+  
+  public static function isRepeated(\google\protobuf\FieldDescriptorProto $field)
+  {
+    return self::LABEL_REPEATED == $field->getLabel();
+  }
+  
+  public static function isPacked(\google\protobuf\FieldDescriptorProto $field)
+  {
+    return self::LABEL_REPEATED == $field->getLabel() &&
+      $field->getOptions()->getPacked();
+  }
   // @@protoc_insertion_point(class_scope:.google.protobuf.FieldDescriptorProto.Label)
   
   public static function getEnumDescriptor()
