@@ -10,9 +10,18 @@ namespace google\protobuf\FileOptions;
  */
 class OptimizeMode extends \ProtocolBuffers\Enum
 {
+  // @@protoc_insertion_point(traits:.google.protobuf.FileOptions.OptimizeMode)
+  
   const SPEED = 1;
+  /**
+   * etc.
+   */
   const CODE_SIZE = 2;
   const LITE_RUNTIME = 3;
+  
+  // @@protoc_insertion_point(const_scope:.google.protobuf.FileOptions.OptimizeMode)
+  
+  // @@protoc_insertion_point(class_scope:.google.protobuf.FileOptions.OptimizeMode)
   
   public static function getEnumDescriptor()
   {
@@ -31,6 +40,7 @@ class OptimizeMode extends \ProtocolBuffers\Enum
         "value" => 3,
         "name"  => 'LITE_RUNTIME',
       )));
+      // @@protoc_insertion_point(builder_scope:.google.protobuf.FileOptions.OptimizeMode)
       $descriptor = $builder->build();
     }
     return $descriptor;

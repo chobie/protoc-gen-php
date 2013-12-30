@@ -10,10 +10,24 @@ namespace google\protobuf\FieldDescriptorProto;
  */
 class Type extends \ProtocolBuffers\Enum
 {
+  // @@protoc_insertion_point(traits:.google.protobuf.FieldDescriptorProto.Type)
+  
+  /**
+   * 0 is reserved for errors.
+   * Order is weird for historical reasons.
+   */
   const TYPE_DOUBLE = 1;
   const TYPE_FLOAT = 2;
+  /**
+   * Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT64 if
+   * negative values are likely.
+   */
   const TYPE_INT64 = 3;
   const TYPE_UINT64 = 4;
+  /**
+   * Not ZigZag encoded.  Negative numbers take 10 bytes.  Use TYPE_SINT32 if
+   * negative values are likely.
+   */
   const TYPE_INT32 = 5;
   const TYPE_FIXED64 = 6;
   const TYPE_FIXED32 = 7;
@@ -21,6 +35,9 @@ class Type extends \ProtocolBuffers\Enum
   const TYPE_STRING = 9;
   const TYPE_GROUP = 10;
   const TYPE_MESSAGE = 11;
+  /**
+   * New in version 2.
+   */
   const TYPE_BYTES = 12;
   const TYPE_UINT32 = 13;
   const TYPE_ENUM = 14;
@@ -28,6 +45,10 @@ class Type extends \ProtocolBuffers\Enum
   const TYPE_SFIXED64 = 16;
   const TYPE_SINT32 = 17;
   const TYPE_SINT64 = 18;
+  
+  // @@protoc_insertion_point(const_scope:.google.protobuf.FieldDescriptorProto.Type)
+  
+  // @@protoc_insertion_point(class_scope:.google.protobuf.FieldDescriptorProto.Type)
   
   public static function getEnumDescriptor()
   {
@@ -106,6 +127,7 @@ class Type extends \ProtocolBuffers\Enum
         "value" => 18,
         "name"  => 'TYPE_SINT64',
       )));
+      // @@protoc_insertion_point(builder_scope:.google.protobuf.FieldDescriptorProto.Type)
       $descriptor = $builder->build();
     }
     return $descriptor;

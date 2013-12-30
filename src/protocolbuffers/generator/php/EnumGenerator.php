@@ -13,6 +13,7 @@ namespace protocolbuffers\generator\php;
 use google\protobuf\EnumValueDescriptorProto;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
+use protocolbuffers\SourceInfoDictionary;
 
 class EnumGenerator extends MessageGenerator
 {
@@ -60,13 +61,45 @@ class EnumGenerator extends MessageGenerator
         );
         $printer->indent();
 
+        $printer->put("// @@protoc_insertion_point(traits:`name`)\n",
+            "name", $this->descriptor->full_name);
+
+        $printer->put("\n");
+
         foreach ($this->descriptor->getValue() as $value) {
+            if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(), $this->descriptor->getName(), $value->getName())) {
+                if ($dict->getLeadingComments()) {
+                    $printer->put("/**\n");
+                    $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
+                    foreach ($lines as $line) {
+                        if (strlen($line) > 0 && $line[0] == " ") {
+                            $line = substr($line, 1);
+                        }
+                        $line = preg_replace("!\*/!", "", $line);
+                        $line = preg_replace("!/\*!", "//", $line);
+                        $line = preg_replace("! \*!", "//", $line);
+                        $printer->put(" * `comment`\n", "comment", $line);
+                    }
+                    $printer->put(" */\n");
+                }
+            }
+
+
             $printer->put(
                 "const `name` = `number`;\n",
                 "name", $this->getEnumValueAsString($value),
                 "number", $value->getNumber()
             );
         }
+
+        $printer->put("\n");
+        $printer->put("// @@protoc_insertion_point(const_scope:`name`)\n",
+            "name", $this->descriptor->full_name);
+
+        $printer->put("\n");
+
+        $printer->put("// @@protoc_insertion_point(class_scope:`name`)\n",
+            "name", $this->descriptor->full_name);
 
         $printer->put("\n");
 
@@ -87,6 +120,10 @@ class EnumGenerator extends MessageGenerator
             $printer->outdent();
             $printer->put(")));\n");
         }
+
+        $printer->put("// @@protoc_insertion_point(builder_scope:`name`)\n",
+            "name", $this->descriptor->full_name);
+
         $printer->put("\$descriptor = \$builder->build();\n");
 
         $printer->outdent();

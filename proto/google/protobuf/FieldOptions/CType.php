@@ -10,9 +10,18 @@ namespace google\protobuf\FieldOptions;
  */
 class CType extends \ProtocolBuffers\Enum
 {
+  // @@protoc_insertion_point(traits:.google.protobuf.FieldOptions.CType)
+  
+  /**
+   * Default mode.
+   */
   const STRING = 0;
   const CORD = 1;
   const STRING_PIECE = 2;
+  
+  // @@protoc_insertion_point(const_scope:.google.protobuf.FieldOptions.CType)
+  
+  // @@protoc_insertion_point(class_scope:.google.protobuf.FieldOptions.CType)
   
   public static function getEnumDescriptor()
   {
@@ -31,6 +40,7 @@ class CType extends \ProtocolBuffers\Enum
         "value" => 2,
         "name"  => 'STRING_PIECE',
       )));
+      // @@protoc_insertion_point(builder_scope:.google.protobuf.FieldOptions.CType)
       $descriptor = $builder->build();
     }
     return $descriptor;
