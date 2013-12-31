@@ -198,7 +198,7 @@ class Compiler
         PragmaticInserter::loadYaml(".protoc.php.yml");
         foreach ($req->getProtoFile() as $file_descriptor) {
             if(!in_array($file_descriptor->getName(), $req->getFileToGenerate())) {
-                error_log($file_descriptor->getName());
+                //error_log($file_descriptor->getName());
                 continue;
             }
 
