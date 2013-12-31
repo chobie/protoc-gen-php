@@ -130,7 +130,10 @@ class FileGenerator
             $printer->put("\n");
             $printer->put("call_user_func(function(){\n");
             $printer->indent();
-            $printer->put("\$registry = \\ProtocolBuffers\\ExtensionRegistry::getInstance();\n");
+            $printer->put("\$registry = `class`::getInstance();\n",
+                "class",
+                Helper::getExtensionRegistryClassName($this->file)
+            );
             $printer->put("// @@protoc_insertion_point(extension_scope:registry)\n");
             $printer->outdent();
             $printer->put("});\n");

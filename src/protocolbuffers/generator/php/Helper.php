@@ -167,6 +167,16 @@ class Helper
 
     }
 
+    public static function getExtensionRegistryClassName(FileDescriptorProto $file)
+    {
+        if (getenv("PEAR_STYLE") ||
+            $file->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+            return "ProtocolBuffersExtensionRegistry";
+        } else {
+            return "\\ProtocolBuffers\\ExtensionRegistry";
+        }
+    }
+
     public static function getExtendeeClassName(FieldDescriptorProto $field)
     {
         if (getenv("PEAR_STYLE") ||
