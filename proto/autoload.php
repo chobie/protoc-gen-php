@@ -50,7 +50,7 @@ call_user_func(function(){
     "repeated" => false,
     "packable" => false,
     "default"  => null,
-    "message" => "PHPFileOptions",
+    "message" => "\\PHPFileOptions",
   )));
   $registry->add('\google\protobuf\MessageOptions', 1004, new \ProtocolBuffers\FieldDescriptor(array(
     "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -60,7 +60,7 @@ call_user_func(function(){
     "repeated" => false,
     "packable" => false,
     "default"  => null,
-    "message" => "PHPMessageOptions",
+    "message" => "\\PHPMessageOptions",
   )));
   // @@protoc_insertion_point(extension_scope:registry)
 });

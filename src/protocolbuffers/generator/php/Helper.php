@@ -89,7 +89,7 @@ class Helper
     {
         if ($descriptor instanceof DescriptorProto || $descriptor instanceof EnumDescriptorProto) {
             if ($full_qualified) {
-                return ltrim(str_replace(".", "\\\\", $descriptor->full_name), "\\");
+                return "\\\\" . ltrim(str_replace(".", "\\\\", $descriptor->full_name), "\\");
             } else {
                 return $descriptor->getName();
             }

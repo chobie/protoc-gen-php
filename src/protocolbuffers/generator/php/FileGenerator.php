@@ -29,7 +29,6 @@ class FileGenerator
     public function generate(Printer $printer)
     {
         $printer->put("<?php\n");
-
         if (!$this->file->getOptions()->getExtension("php")->getMultipleFiles()) {
             $file_list = array();
 
@@ -95,12 +94,12 @@ class FileGenerator
         }
 
         foreach ($file_list as $file) {
-            $tmp = str_replace("\\", "/", $file);
-            $key = str_replace("/", "\\", substr($file, 0, strrpos($file, ".")));
+            $tmp = str_replace("\\", DIRECTORY_SEPARATOR, $file);
+            $key = str_replace(DIRECTORY_SEPARATOR, "\\", substr($file, 0, strrpos($file, ".")));
 
             $printer->put("'`key`' => '`path`',\n",
                     "key", ltrim($key, "\\"),
-                    "path", "/" . ltrim($tmp, "/")
+                    "path", DIRECTORY_SEPARATOR . ltrim($tmp, DIRECTORY_SEPARATOR)
             );
         }
 

@@ -65,7 +65,10 @@ class EnumGenerator extends MessageGenerator
         $printer->put("\n");
 
         foreach ($this->descriptor->getValue() as $value) {
-            if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(), $this->descriptor->getName(), $value->getName())) {
+            if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(),
+                    $this->descriptor->getName(),
+                    $value->getName())
+            ) {
                 if ($dict->getLeadingComments()) {
                     $printer->put("/**\n");
                     $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
