@@ -30,28 +30,6 @@ class MessageGenerator
 
     protected $enclose_namespace_ = false;
 
-    protected static $fields_map = array(
-        "DUMMY",
-        "\\ProtocolBuffers::TYPE_DOUBLE",
-        "\\ProtocolBuffers::TYPE_FLOAT",
-        "\\ProtocolBuffers::TYPE_INT64",
-        "\\ProtocolBuffers::TYPE_UINT64",
-        "\\ProtocolBuffers::TYPE_INT32",
-        "\\ProtocolBuffers::TYPE_FIXED64",
-        "\\ProtocolBuffers::TYPE_FIXED32",
-        "\\ProtocolBuffers::TYPE_BOOL",
-        "\\ProtocolBuffers::TYPE_STRING",
-        "\\ProtocolBuffers::TYPE_GROUP",
-        "\\ProtocolBuffers::TYPE_MESSAGE",
-        "\\ProtocolBuffers::TYPE_BYTES",
-        "\\ProtocolBuffers::TYPE_UINT32",
-        "\\ProtocolBuffers::TYPE_ENUM",
-        "\\ProtocolBuffers::TYPE_SFIXED32",
-        "\\ProtocolBuffers::TYPE_SFIXED64",
-        "\\ProtocolBuffers::TYPE_SINT32",
-        "\\ProtocolBuffers::TYPE_SINT64",
-    );
-
     public function __construct(GeneratorContext $context,
                                 \google\protobuf\DescriptorProto $descriptor,
                                 &$file_list)
@@ -91,7 +69,7 @@ class MessageGenerator
     public function printUseNameSpaceIfNeeded(Printer $printer)
     {
         if (Helper::isPearStyle($this->descriptor)) {
-
+            // nothing to do.
         } else {
             if ($this->hasNameSpace()) {
                 if ($this->enclose_namespace_) {
@@ -160,7 +138,7 @@ class MessageGenerator
                     "required", (FieldDescriptorProto\Label::isRequired($field) ? "required" : "optional"));
                 $printer->put(" * @type `type`\n",
                     "type",
-                    self::$fields_map[$field->getType()]);
+                    Helper::getFieldTypeName($field));
                 if (FieldDescriptorProto\Label::isRepeated($field) &&
                         FieldDescriptorProto\Type::isMessage($field) ||
                         FieldDescriptorProto\Type::isEnum($field)) {
@@ -215,7 +193,7 @@ class MessageGenerator
         $printer->indent();
         $printer->put("\$desc = new `class_name`();\n",
             "class_name",
-            "\\ProtocolBuffers\\DescriptorBuilder");
+            Helper::getDescriptorBuilderClassName($this->descriptor));
 
         foreach ($this->descriptor->getField() as $offset => $field) {
             /* @var $field \google\protobuf\FieldDescriptorProto */
@@ -223,11 +201,11 @@ class MessageGenerator
                 "tag",
                 $field->getNumber(),
                 "class_name",
-                "\\ProtocolBuffers\\FieldDescriptor");
+                Helper::getFieldDescriptorClassName($this->descriptor));
             $printer->indent();
             $printer->put("\"type\"     => `type`,\n",
                 "type",
-                self::$fields_map[$field->getType()]);
+                Helper::getFieldTypeName($field));
             $printer->put("\"name\"     => \"`name`\",\n",
                 "name",
                 $field->getName());
@@ -471,7 +449,7 @@ class MessageGenerator
         $printer->indent();
         $printer->put("\"type\"     => `type`,\n",
             "type",
-            self::$fields_map[$field->getType()]);
+            Helper::getFieldTypeName($field));
         $printer->put("\"name\"     => \"`name`\",\n",
             "name",
             $field->getName());
@@ -571,9 +549,11 @@ class MessageGenerator
         $this->printMagicMethod($printer);
         $printer->put(" */\n");
 
-        $printer->put("class `name` extends \\ProtocolBuffers\\Message\n{\n",
+        $printer->put("class `name` extends `base`\n{\n",
             "name",
-             Helper::getClassName($this->descriptor, false)
+             Helper::getClassName($this->descriptor, false),
+            "base",
+            Helper::getBaseClassName($this->descriptor)
         );
         $printer->indent();
 

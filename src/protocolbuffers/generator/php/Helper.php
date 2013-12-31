@@ -18,6 +18,28 @@ use PHPFileOptions\Style;
 
 class Helper
 {
+    protected static $fields_map = array(
+        "DUMMY",
+        "\\ProtocolBuffers::TYPE_DOUBLE",
+        "\\ProtocolBuffers::TYPE_FLOAT",
+        "\\ProtocolBuffers::TYPE_INT64",
+        "\\ProtocolBuffers::TYPE_UINT64",
+        "\\ProtocolBuffers::TYPE_INT32",
+        "\\ProtocolBuffers::TYPE_FIXED64",
+        "\\ProtocolBuffers::TYPE_FIXED32",
+        "\\ProtocolBuffers::TYPE_BOOL",
+        "\\ProtocolBuffers::TYPE_STRING",
+        "\\ProtocolBuffers::TYPE_GROUP",
+        "\\ProtocolBuffers::TYPE_MESSAGE",
+        "\\ProtocolBuffers::TYPE_BYTES",
+        "\\ProtocolBuffers::TYPE_UINT32",
+        "\\ProtocolBuffers::TYPE_ENUM",
+        "\\ProtocolBuffers::TYPE_SFIXED32",
+        "\\ProtocolBuffers::TYPE_SFIXED64",
+        "\\ProtocolBuffers::TYPE_SINT32",
+        "\\ProtocolBuffers::TYPE_SINT64",
+    );
+
     public static function cameraize($string)
     {
         return str_replace(' ','',ucwords(preg_replace('/[^A-Z^a-z^0-9]+/',' ',$string)));
@@ -62,6 +84,17 @@ class Helper
         }
 
         return $result;
+    }
+
+    public static function getFieldTypeName($field)
+    {
+        if (getenv("PEAR_STYLE") ||
+            $field->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+            return preg_replace('/^\\\\/', "", self::$fields_map[$field->getType()]);
+        } else {
+            return self::$fields_map[$field->getType()];
+        }
+
     }
 
     public static function phpPackageToDir($name)
@@ -113,6 +146,27 @@ class Helper
         }
     }
 
+    public static function getBaseClassName($descriptor)
+    {
+        //\\ProtocolBuffers\\Message
+        if ($descriptor instanceof FileDescriptorProto) {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersMessage";
+            } else {
+                return '\ProtocolBuffers\Message';
+            }
+        } else {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersMessage";
+            } else {
+                return '\ProtocolBuffers\Message';
+            }
+        }
+
+    }
+
     public static function getExtendeeClassName(FieldDescriptorProto $field)
     {
         return str_replace(".", "\\", $field->getExtendee());
@@ -132,6 +186,44 @@ class Helper
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static function getDescriptorBuilderClassName($descriptor)
+    {
+        if ($descriptor instanceof FileDescriptorProto) {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersDescriptorBuilder";
+            } else {
+                return '\ProtocolBuffers\DescriptorBuilder';
+            }
+        } else {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersDescriptorBuilder";
+            } else {
+                return '\ProtocolBuffers\DescriptorBuilder';
+            }
+        }
+    }
+
+    public static function getFieldDescriptorClassName($descriptor)
+    {
+        if ($descriptor instanceof FileDescriptorProto) {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersFieldDescriptor";
+            } else {
+                return '\ProtocolBuffers\FieldDescriptor';
+            }
+        } else {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersFieldDescriptor";
+            } else {
+                return '\ProtocolBuffers\FieldDescriptor';
+            }
         }
     }
 
