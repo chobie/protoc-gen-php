@@ -143,7 +143,7 @@ class MessageGenerator
                         FieldDescriptorProto\Type::isMessage($field) ||
                         FieldDescriptorProto\Type::isEnum($field)) {
                     $printer->put(" * @see `see`\n",
-                        "see", str_replace(".", "\\", $field->getTypeName()));
+                        "see", Helper::getClassName($field, true));
                 }
 
                 if ($dict = SourceInfoDictionary::get($this->descriptor->file()->getName(), $this->descriptor->getName(), $field->getName())) {

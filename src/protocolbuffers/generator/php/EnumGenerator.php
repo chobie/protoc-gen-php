@@ -55,9 +55,11 @@ class EnumGenerator extends MessageGenerator
             $this->descriptor->file()->getName()
         );
         $printer->put(" */\n");
-        $printer->put("class `name` extends \\ProtocolBuffers\\Enum\n{\n",
+        $printer->put("class `name` extends `base`\n{\n",
             "name",
-            Helper::getClassName($this->descriptor)
+            Helper::getClassName($this->descriptor),
+            "base",
+            Helper::getEnumClassName($this->descriptor)
         );
         $printer->indent();
         $printer->put("// @@protoc_insertion_point(traits:`name`)\n",
@@ -108,7 +110,10 @@ class EnumGenerator extends MessageGenerator
         $printer->put("static \$descriptor;\n");
         $printer->put("if (!\$descriptor) {\n");
         $printer->indent();
-        $printer->put("\$builder = new \\ProtocolBuffers\\EnumDescriptorBuilder();\n");
+        $printer->put("\$builder = new `builder`();\n",
+            "builder",
+            Helper::getEnumDescriptorBuilderClassName($this->descriptor)
+        );
         foreach ($this->descriptor->getValue() as $value) {
             $printer->put("\$builder->addValue(new \\ProtocolBuffers\\EnumValueDescriptor(array(\n");
             $printer->indent();

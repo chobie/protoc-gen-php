@@ -189,6 +189,44 @@ class Helper
         }
     }
 
+    public static function getEnumClassName($descriptor)
+    {
+        if ($descriptor instanceof FileDescriptorProto) {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return 'ProtocolBuffersEnum';
+            } else {
+                return '\ProtocolBuffers\Enum';
+            }
+        } else {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return 'ProtocolBuffersEnum';
+            } else {
+                return '\ProtocolBuffers\Enum';
+            }
+        }
+    }
+
+    public static function getEnumDescriptorBuilderClassName($descriptor)
+    {
+        if ($descriptor instanceof FileDescriptorProto) {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersEnumDescriptorBuilder";
+            } else {
+                return '\ProtocolBuffers\EnumDescriptorBuilder';
+            }
+        } else {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return "ProtocolBuffersEnumDescriptorBuilder";
+            } else {
+                return '\ProtocolBuffers\EnumDescriptorBuilder';
+            }
+        }
+    }
+
     public static function getDescriptorBuilderClassName($descriptor)
     {
         if ($descriptor instanceof FileDescriptorProto) {
