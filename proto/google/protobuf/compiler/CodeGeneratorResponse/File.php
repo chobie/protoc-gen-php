@@ -38,6 +38,7 @@ class File extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name;
   
@@ -83,6 +84,7 @@ class File extends \ProtocolBuffers\Message
    * @var string $insertion_point
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $insertion_point;
   
@@ -92,6 +94,7 @@ class File extends \ProtocolBuffers\Message
    * @var string $content
    * @tag 15
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $content;
   

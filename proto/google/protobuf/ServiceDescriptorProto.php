@@ -14,7 +14,7 @@ namespace google\protobuf;
  * @method string getName()
  * @method void setName(string $value)
  * @method array getMethod()
- * @method void appendMethod(array $value)
+ * @method void appendMethod(\google\protobuf\MethodDescriptorProto $value)
  * @method \google\protobuf\ServiceOptions getOptions()
  * @method void setOptions(\google\protobuf\ServiceOptions $value)
  */
@@ -26,6 +26,7 @@ class ServiceDescriptorProto extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name;
   
@@ -33,6 +34,7 @@ class ServiceDescriptorProto extends \ProtocolBuffers\Message
    * @var array $method
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\MethodDescriptorProto
    **/
   protected $method;
@@ -41,6 +43,7 @@ class ServiceDescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\ServiceOptions $options
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $options;
   

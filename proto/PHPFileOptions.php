@@ -22,6 +22,7 @@ class PHPFileOptions extends \ProtocolBuffers\Message
    * @var bool $multiple_files
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $multiple_files;
   
@@ -29,6 +30,7 @@ class PHPFileOptions extends \ProtocolBuffers\Message
    * @var bool $skip_unknown
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $skip_unknown;
   
@@ -36,6 +38,7 @@ class PHPFileOptions extends \ProtocolBuffers\Message
    * @var string $base_class
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $base_class;
   

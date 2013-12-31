@@ -22,6 +22,7 @@ class PHPMessageOptions extends \ProtocolBuffers\Message
    * @var bool $use_single_property
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $use_single_property;
   
@@ -29,6 +30,7 @@ class PHPMessageOptions extends \ProtocolBuffers\Message
    * @var string $single_property_name
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $single_property_name;
   
@@ -36,6 +38,7 @@ class PHPMessageOptions extends \ProtocolBuffers\Message
    * @var bool $use_wakeup_and_sleep
    * @tag 4
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $use_wakeup_and_sleep;
   

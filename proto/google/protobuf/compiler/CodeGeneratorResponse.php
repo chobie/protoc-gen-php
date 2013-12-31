@@ -14,7 +14,7 @@ namespace google\protobuf\compiler;
  * @method string getError()
  * @method void setError(string $value)
  * @method array getFile()
- * @method void appendFile(array $value)
+ * @method void appendFile(\google\protobuf\compiler\CodeGeneratorResponse\File $value)
  */
 class CodeGeneratorResponse extends \ProtocolBuffers\Message
 {
@@ -33,6 +33,7 @@ class CodeGeneratorResponse extends \ProtocolBuffers\Message
    * @var string $error
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $error;
   
@@ -40,6 +41,7 @@ class CodeGeneratorResponse extends \ProtocolBuffers\Message
    * @var array $file
    * @tag 15
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\compiler\CodeGeneratorResponse\File
    **/
   protected $file;

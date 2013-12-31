@@ -17,7 +17,7 @@ namespace google\protobuf;
  * -*- magic methods -*-
  *
  * @method array getName()
- * @method void appendName(array $value)
+ * @method void appendName(\google\protobuf\UninterpretedOption\NamePart $value)
  * @method string getIdentifierValue()
  * @method void setIdentifierValue(string $value)
  * @method string getPositiveIntValue()
@@ -39,6 +39,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var array $name
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\UninterpretedOption\NamePart
    **/
   protected $name;
@@ -50,6 +51,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var string $identifier_value
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $identifier_value;
   
@@ -57,6 +59,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var string $positive_int_value
    * @tag 4
    * @label optional
+   * @type \ProtocolBuffers::TYPE_UINT64
    **/
   protected $positive_int_value;
   
@@ -64,6 +67,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var string $negative_int_value
    * @tag 5
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT64
    **/
   protected $negative_int_value;
   
@@ -71,6 +75,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var string $double_value
    * @tag 6
    * @label optional
+   * @type \ProtocolBuffers::TYPE_DOUBLE
    **/
   protected $double_value;
   
@@ -78,6 +83,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var string $string_value
    * @tag 7
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BYTES
    **/
   protected $string_value;
   
@@ -85,6 +91,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
    * @var string $aggregate_value
    * @tag 8
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $aggregate_value;
   

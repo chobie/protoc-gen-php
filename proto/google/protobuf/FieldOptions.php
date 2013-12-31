@@ -22,7 +22,7 @@ namespace google\protobuf;
  * @method bool getWeak()
  * @method void setWeak(bool $value)
  * @method array getUninterpretedOption()
- * @method void appendUninterpretedOption(array $value)
+ * @method void appendUninterpretedOption(\google\protobuf\UninterpretedOption $value)
  */
 class FieldOptions extends \ProtocolBuffers\Message
 {
@@ -37,6 +37,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var \google\protobuf\FieldOptions\CType $ctype
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_ENUM
    * @see \google\protobuf\FieldOptions\CType
    **/
   protected $ctype;
@@ -50,6 +51,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var bool $packed
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $packed;
   
@@ -86,6 +88,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var bool $lazy
    * @tag 5
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $lazy;
   
@@ -98,6 +101,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var bool $deprecated
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $deprecated;
   
@@ -118,6 +122,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var string $experimental_map_key
    * @tag 9
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $experimental_map_key;
   
@@ -127,6 +132,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var bool $weak
    * @tag 10
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $weak;
   
@@ -136,6 +142,7 @@ class FieldOptions extends \ProtocolBuffers\Message
    * @var array $uninterpreted_option
    * @tag 999
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\UninterpretedOption
    **/
   protected $uninterpreted_option;
@@ -163,7 +170,7 @@ class FieldOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => \google\protobuf\FieldOptions\CType::STRING,
+        "default"  => array(),
       )));
       $desc->addField(2, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,

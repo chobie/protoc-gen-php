@@ -26,6 +26,7 @@ class EnumValueDescriptorProto extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name;
   
@@ -33,6 +34,7 @@ class EnumValueDescriptorProto extends \ProtocolBuffers\Message
    * @var string $number
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $number;
   
@@ -40,6 +42,7 @@ class EnumValueDescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\EnumValueOptions $options
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $options;
   

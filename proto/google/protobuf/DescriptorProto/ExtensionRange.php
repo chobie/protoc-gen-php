@@ -22,6 +22,7 @@ class ExtensionRange extends \ProtocolBuffers\Message
    * @var string $start
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $start;
   
@@ -29,6 +30,7 @@ class ExtensionRange extends \ProtocolBuffers\Message
    * @var string $end
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $end;
   

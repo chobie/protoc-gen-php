@@ -10,9 +10,9 @@ namespace google\protobuf\SourceCodeInfo;
  * -*- magic methods -*-
  *
  * @method array getPath()
- * @method void appendPath(array $value)
+ * @method void appendPath(string $value)
  * @method array getSpan()
- * @method void appendSpan(array $value)
+ * @method void appendSpan(string $value)
  * @method string getLeadingComments()
  * @method void setLeadingComments(string $value)
  * @method string getTrailingComments()
@@ -50,6 +50,7 @@ class Location extends \ProtocolBuffers\Message
    * @var array $path
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $path;
   
@@ -63,6 +64,7 @@ class Location extends \ProtocolBuffers\Message
    * @var array $span
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $span;
   
@@ -105,6 +107,7 @@ class Location extends \ProtocolBuffers\Message
    * @var string $leading_comments
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $leading_comments;
   
@@ -112,6 +115,7 @@ class Location extends \ProtocolBuffers\Message
    * @var string $trailing_comments
    * @tag 4
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $trailing_comments;
   

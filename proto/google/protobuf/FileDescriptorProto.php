@@ -16,19 +16,19 @@ namespace google\protobuf;
  * @method string getPackage()
  * @method void setPackage(string $value)
  * @method array getDependency()
- * @method void appendDependency(array $value)
+ * @method void appendDependency(string $value)
  * @method array getPublicDependency()
- * @method void appendPublicDependency(array $value)
+ * @method void appendPublicDependency(string $value)
  * @method array getWeakDependency()
- * @method void appendWeakDependency(array $value)
+ * @method void appendWeakDependency(string $value)
  * @method array getMessageType()
- * @method void appendMessageType(array $value)
+ * @method void appendMessageType(\google\protobuf\DescriptorProto $value)
  * @method array getEnumType()
- * @method void appendEnumType(array $value)
+ * @method void appendEnumType(\google\protobuf\EnumDescriptorProto $value)
  * @method array getService()
- * @method void appendService(array $value)
+ * @method void appendService(\google\protobuf\ServiceDescriptorProto $value)
  * @method array getExtension()
- * @method void appendExtension(array $value)
+ * @method void appendExtension(\google\protobuf\FieldDescriptorProto $value)
  * @method \google\protobuf\FileOptions getOptions()
  * @method void setOptions(\google\protobuf\FileOptions $value)
  * @method \google\protobuf\SourceCodeInfo getSourceCodeInfo()
@@ -42,6 +42,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    *
    * file name, relative to root of source tree
    *
@@ -52,6 +53,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var string $package
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    *
    * e.g. "foo", "foo.bar", etc.
    *
@@ -64,6 +66,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $dependency
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $dependency;
   
@@ -73,6 +76,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $public_dependency
    * @tag 10
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $public_dependency;
   
@@ -83,6 +87,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $weak_dependency
    * @tag 11
    * @label optional
+   * @type \ProtocolBuffers::TYPE_INT32
    **/
   protected $weak_dependency;
   
@@ -92,6 +97,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $message_type
    * @tag 4
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\DescriptorProto
    **/
   protected $message_type;
@@ -100,6 +106,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $enum_type
    * @tag 5
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\EnumDescriptorProto
    **/
   protected $enum_type;
@@ -108,6 +115,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $service
    * @tag 6
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\ServiceDescriptorProto
    **/
   protected $service;
@@ -116,6 +124,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var array $extension
    * @tag 7
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\FieldDescriptorProto
    **/
   protected $extension;
@@ -124,6 +133,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\FileOptions $options
    * @tag 8
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $options;
   
@@ -136,6 +146,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\SourceCodeInfo $source_code_info
    * @tag 9
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $source_code_info;
   

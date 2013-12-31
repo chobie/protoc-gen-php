@@ -49,15 +49,15 @@ class Label extends \ProtocolBuffers\Enum
     if (!$descriptor) {
       $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 1,
+        "value" => self::LABEL_OPTIONAL,
         "name"  => 'LABEL_OPTIONAL',
       )));
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 2,
+        "value" => self::LABEL_REQUIRED,
         "name"  => 'LABEL_REQUIRED',
       )));
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 3,
+        "value" => self::LABEL_REPEATED,
         "name"  => 'LABEL_REPEATED',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.FieldDescriptorProto.Label)

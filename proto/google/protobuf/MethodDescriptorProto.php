@@ -28,6 +28,7 @@ class MethodDescriptorProto extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name;
   
@@ -38,6 +39,7 @@ class MethodDescriptorProto extends \ProtocolBuffers\Message
    * @var string $input_type
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $input_type;
   
@@ -45,6 +47,7 @@ class MethodDescriptorProto extends \ProtocolBuffers\Message
    * @var string $output_type
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $output_type;
   
@@ -52,6 +55,7 @@ class MethodDescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\MethodOptions $options
    * @tag 4
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $options;
   

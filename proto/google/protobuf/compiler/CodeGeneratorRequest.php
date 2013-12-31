@@ -12,11 +12,11 @@ namespace google\protobuf\compiler;
  * -*- magic methods -*-
  *
  * @method array getFileToGenerate()
- * @method void appendFileToGenerate(array $value)
+ * @method void appendFileToGenerate(string $value)
  * @method string getParameter()
  * @method void setParameter(string $value)
  * @method array getProtoFile()
- * @method void appendProtoFile(array $value)
+ * @method void appendProtoFile(\google\protobuf\FileDescriptorProto $value)
  */
 class CodeGeneratorRequest extends \ProtocolBuffers\Message
 {
@@ -30,6 +30,7 @@ class CodeGeneratorRequest extends \ProtocolBuffers\Message
    * @var array $file_to_generate
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $file_to_generate;
   
@@ -39,6 +40,7 @@ class CodeGeneratorRequest extends \ProtocolBuffers\Message
    * @var string $parameter
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $parameter;
   
@@ -58,6 +60,7 @@ class CodeGeneratorRequest extends \ProtocolBuffers\Message
    * @var array $proto_file
    * @tag 15
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\FileDescriptorProto
    **/
   protected $proto_file;

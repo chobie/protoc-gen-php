@@ -10,7 +10,7 @@ namespace google\protobuf;
  * -*- magic methods -*-
  *
  * @method array getUninterpretedOption()
- * @method void appendUninterpretedOption(array $value)
+ * @method void appendUninterpretedOption(\google\protobuf\UninterpretedOption $value)
  */
 class EnumValueOptions extends \ProtocolBuffers\Message
 {
@@ -22,6 +22,7 @@ class EnumValueOptions extends \ProtocolBuffers\Message
    * @var array $uninterpreted_option
    * @tag 999
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\UninterpretedOption
    **/
   protected $uninterpreted_option;

@@ -12,7 +12,7 @@ namespace google\protobuf;
  * @method bool getAllowAlias()
  * @method void setAllowAlias(bool $value)
  * @method array getUninterpretedOption()
- * @method void appendUninterpretedOption(array $value)
+ * @method void appendUninterpretedOption(\google\protobuf\UninterpretedOption $value)
  */
 class EnumOptions extends \ProtocolBuffers\Message
 {
@@ -25,6 +25,7 @@ class EnumOptions extends \ProtocolBuffers\Message
    * @var bool $allow_alias
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $allow_alias;
   
@@ -34,6 +35,7 @@ class EnumOptions extends \ProtocolBuffers\Message
    * @var array $uninterpreted_option
    * @tag 999
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\UninterpretedOption
    **/
   protected $uninterpreted_option;

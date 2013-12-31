@@ -29,15 +29,15 @@ class OptimizeMode extends \ProtocolBuffers\Enum
     if (!$descriptor) {
       $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 1,
+        "value" => self::SPEED,
         "name"  => 'SPEED',
       )));
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 2,
+        "value" => self::CODE_SIZE,
         "name"  => 'CODE_SIZE',
       )));
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 3,
+        "value" => self::LITE_RUNTIME,
         "name"  => 'LITE_RUNTIME',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.FileOptions.OptimizeMode)

@@ -14,7 +14,7 @@ namespace google\protobuf;
  * @method bool getNoStandardDescriptorAccessor()
  * @method void setNoStandardDescriptorAccessor(bool $value)
  * @method array getUninterpretedOption()
- * @method void appendUninterpretedOption(array $value)
+ * @method void appendUninterpretedOption(\google\protobuf\UninterpretedOption $value)
  */
 class MessageOptions extends \ProtocolBuffers\Message
 {
@@ -43,6 +43,7 @@ class MessageOptions extends \ProtocolBuffers\Message
    * @var bool $message_set_wire_format
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $message_set_wire_format;
   
@@ -54,6 +55,7 @@ class MessageOptions extends \ProtocolBuffers\Message
    * @var bool $no_standard_descriptor_accessor
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $no_standard_descriptor_accessor;
   
@@ -63,6 +65,7 @@ class MessageOptions extends \ProtocolBuffers\Message
    * @var array $uninterpreted_option
    * @tag 999
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\UninterpretedOption
    **/
   protected $uninterpreted_option;

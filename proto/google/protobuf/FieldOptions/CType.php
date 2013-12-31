@@ -29,15 +29,15 @@ class CType extends \ProtocolBuffers\Enum
     if (!$descriptor) {
       $builder = new \ProtocolBuffers\EnumDescriptorBuilder();
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 0,
+        "value" => self::STRING,
         "name"  => 'STRING',
       )));
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 1,
+        "value" => self::CORD,
         "name"  => 'CORD',
       )));
       $builder->addValue(new \ProtocolBuffers\EnumValueDescriptor(array(
-        "value" => 2,
+        "value" => self::STRING_PIECE,
         "name"  => 'STRING_PIECE',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.FieldOptions.CType)

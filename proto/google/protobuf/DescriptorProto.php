@@ -14,15 +14,15 @@ namespace google\protobuf;
  * @method string getName()
  * @method void setName(string $value)
  * @method array getField()
- * @method void appendField(array $value)
+ * @method void appendField(\google\protobuf\FieldDescriptorProto $value)
  * @method array getExtension()
- * @method void appendExtension(array $value)
+ * @method void appendExtension(\google\protobuf\FieldDescriptorProto $value)
  * @method array getNestedType()
- * @method void appendNestedType(array $value)
+ * @method void appendNestedType(\google\protobuf\DescriptorProto $value)
  * @method array getEnumType()
- * @method void appendEnumType(array $value)
+ * @method void appendEnumType(\google\protobuf\EnumDescriptorProto $value)
  * @method array getExtensionRange()
- * @method void appendExtensionRange(array $value)
+ * @method void appendExtensionRange(\google\protobuf\DescriptorProto\ExtensionRange $value)
  * @method \google\protobuf\MessageOptions getOptions()
  * @method void setOptions(\google\protobuf\MessageOptions $value)
  */
@@ -34,6 +34,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name;
   
@@ -41,6 +42,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var array $field
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\FieldDescriptorProto
    **/
   protected $field;
@@ -49,6 +51,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var array $extension
    * @tag 6
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\FieldDescriptorProto
    **/
   protected $extension;
@@ -57,6 +60,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var array $nested_type
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\DescriptorProto
    **/
   protected $nested_type;
@@ -65,6 +69,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var array $enum_type
    * @tag 4
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\EnumDescriptorProto
    **/
   protected $enum_type;
@@ -73,6 +78,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var array $extension_range
    * @tag 5
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\DescriptorProto\ExtensionRange
    **/
   protected $extension_range;
@@ -81,6 +87,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\MessageOptions $options
    * @tag 7
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $options;
   

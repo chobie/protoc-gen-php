@@ -14,7 +14,7 @@ namespace google\protobuf;
  * @method string getName()
  * @method void setName(string $value)
  * @method array getValue()
- * @method void appendValue(array $value)
+ * @method void appendValue(\google\protobuf\EnumValueDescriptorProto $value)
  * @method \google\protobuf\EnumOptions getOptions()
  * @method void setOptions(\google\protobuf\EnumOptions $value)
  */
@@ -26,6 +26,7 @@ class EnumDescriptorProto extends \ProtocolBuffers\Message
    * @var string $name
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name;
   
@@ -33,6 +34,7 @@ class EnumDescriptorProto extends \ProtocolBuffers\Message
    * @var array $value
    * @tag 2
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\EnumValueDescriptorProto
    **/
   protected $value;
@@ -41,6 +43,7 @@ class EnumDescriptorProto extends \ProtocolBuffers\Message
    * @var \google\protobuf\EnumOptions $options
    * @tag 3
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    **/
   protected $options;
   

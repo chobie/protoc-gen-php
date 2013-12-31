@@ -28,6 +28,7 @@ class NamePart extends \ProtocolBuffers\Message
    * @var string $name_part
    * @tag 1
    * @label required
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $name_part;
   
@@ -35,6 +36,7 @@ class NamePart extends \ProtocolBuffers\Message
    * @var bool $is_extension
    * @tag 2
    * @label required
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $is_extension;
   

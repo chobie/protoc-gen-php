@@ -161,7 +161,9 @@ class MessageGenerator
                     "tag", $field->getNumber());
                 $printer->put(" * @label `required`\n",
                     "required", (FieldDescriptorProto\Label::isRequired($field) ? "required" : "optional"));
-
+                $printer->put(" * @type `type`\n",
+                    "type",
+                    self::$fields_map[$field->getType()]);
                 if (FieldDescriptorProto\Label::isRepeated($field) &&
                         FieldDescriptorProto\Type::isMessage($field) ||
                         FieldDescriptorProto\Type::isEnum($field)) {
@@ -318,9 +320,9 @@ class MessageGenerator
         $printer->put("\n");
     }
 
-    public function getTypeName(FieldDescriptorProto $field)
+    public function getTypeName(FieldDescriptorProto $field, $repeated = false)
     {
-        if (FieldDescriptorProto\Label::isRepeated($field)) {
+        if (!$repeated && FieldDescriptorProto\Label::isRepeated($field)) {
             return "array";
         }
 
@@ -451,7 +453,7 @@ class MessageGenerator
                 $printer->put(" * @method void append`variable`(`type2` \$value)\n",
                     "type", $this->getTypeName($field),
                     "variable", Helper::cameraize($field->getName()),
-                    "type2", $this->getTypeName($field)
+                    "type2", $this->getTypeName($field, true)
                 );
             } else {
                 $printer->put(" * @method void set`variable`(`type2` \$value)\n",

@@ -28,7 +28,7 @@ namespace google\protobuf;
  * @method bool getPyGenericServices()
  * @method void setPyGenericServices(bool $value)
  * @method array getUninterpretedOption()
- * @method void appendUninterpretedOption(array $value)
+ * @method void appendUninterpretedOption(\google\protobuf\UninterpretedOption $value)
  */
 class FileOptions extends \ProtocolBuffers\Message
 {
@@ -43,6 +43,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var string $java_package
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $java_package;
   
@@ -56,6 +57,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var string $java_outer_classname
    * @tag 8
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $java_outer_classname;
   
@@ -70,6 +72,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var bool $java_multiple_files
    * @tag 10
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $java_multiple_files;
   
@@ -82,6 +85,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var bool $java_generate_equals_and_hash
    * @tag 20
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $java_generate_equals_and_hash;
   
@@ -89,6 +93,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var \google\protobuf\FileOptions\OptimizeMode $optimize_for
    * @tag 9
    * @label optional
+   * @type \ProtocolBuffers::TYPE_ENUM
    * @see \google\protobuf\FileOptions\OptimizeMode
    **/
   protected $optimize_for;
@@ -100,6 +105,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var string $go_package
    * @tag 11
    * @label optional
+   * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $go_package;
   
@@ -118,6 +124,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var bool $cc_generic_services
    * @tag 16
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $cc_generic_services;
   
@@ -125,6 +132,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var bool $java_generic_services
    * @tag 17
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $java_generic_services;
   
@@ -132,6 +140,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var bool $py_generic_services
    * @tag 18
    * @label optional
+   * @type \ProtocolBuffers::TYPE_BOOL
    **/
   protected $py_generic_services;
   
@@ -141,6 +150,7 @@ class FileOptions extends \ProtocolBuffers\Message
    * @var array $uninterpreted_option
    * @tag 999
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\UninterpretedOption
    **/
   protected $uninterpreted_option;
@@ -204,7 +214,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => \google\protobuf\FileOptions\OptimizeMode::SPEED,
+        "default"  => array(),
       )));
       $desc->addField(11, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_STRING,

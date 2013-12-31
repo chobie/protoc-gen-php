@@ -115,7 +115,7 @@ class EnumGenerator extends MessageGenerator
             $printer->put("\$builder->addValue(new \\ProtocolBuffers\\EnumValueDescriptor(array(\n");
             $printer->indent();
             $printer->put("\"value\" => `value`,\n",
-                "value", $value->getNumber());
+                "value", "self::" . $value->getName());
             $printer->put("\"name\"  => '`name`',\n",
                 "name", $value->getName());
             $printer->outdent();

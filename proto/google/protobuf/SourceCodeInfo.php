@@ -13,7 +13,7 @@ namespace google\protobuf;
  * -*- magic methods -*-
  *
  * @method array getLocation()
- * @method void appendLocation(array $value)
+ * @method void appendLocation(\google\protobuf\SourceCodeInfo\Location $value)
  */
 class SourceCodeInfo extends \ProtocolBuffers\Message
 {
@@ -67,6 +67,7 @@ class SourceCodeInfo extends \ProtocolBuffers\Message
    * @var array $location
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\SourceCodeInfo\Location
    **/
   protected $location;

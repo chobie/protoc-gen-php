@@ -13,7 +13,7 @@ namespace google\protobuf;
  * -*- magic methods -*-
  *
  * @method array getFile()
- * @method void appendFile(array $value)
+ * @method void appendFile(\google\protobuf\FileDescriptorProto $value)
  */
 class FileDescriptorSet extends \ProtocolBuffers\Message
 {
@@ -23,6 +23,7 @@ class FileDescriptorSet extends \ProtocolBuffers\Message
    * @var array $file
    * @tag 1
    * @label optional
+   * @type \ProtocolBuffers::TYPE_MESSAGE
    * @see \google\protobuf\FileDescriptorProto
    **/
   protected $file;
