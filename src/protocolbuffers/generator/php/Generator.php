@@ -13,6 +13,7 @@ namespace protocolbuffers\generator\php;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 use protocolbuffers\StringStream;
+use protocolbuffers\generator\php\Helper;
 use Symfony\Component\Yaml\Yaml;
 
 class Generator
@@ -31,6 +32,14 @@ class Generator
         return $package_dir;
     }
 
+    /**
+     * generate php messages
+     *
+     * @param \google\protobuf\FileDescriptorProto $file
+     * @param array $paramter
+     * @param GeneratorContext $context
+     * @param StringStream $error
+     */
     public function generate(\google\protobuf\FileDescriptorProto $file,
                              $paramter = array(),
                              GeneratorContext $context,
@@ -53,7 +62,7 @@ class Generator
                 $package_name = Helper::phppackage($file);
             }
 
-            $package_dir = $this->phppackagetodir($package_name);
+            $package_dir = Helper::phpPackageToDir($package_name);
             $printer = new Printer($context->open($file->getName() . ".php"), "`");
             $file_generator->generate($printer);
             $file_generator->generateSiblings($package_dir, $context, $file_list);

@@ -63,6 +63,28 @@ class Helper
         return $result;
     }
 
+    public static function phpPackageToDir($name)
+    {
+        $package_dir = str_replace(".", DIRECTORY_SEPARATOR, $name);
+        if (!$package_dir)  {
+            $package_dir .= DIRECTORY_SEPARATOR;
+        }
+
+        return $package_dir;
+    }
+
+    public static function cleanupComment($line)
+    {
+        if (strlen($line) > 0 && $line[0] == " ") {
+            $line = substr($line, 1);
+        }
+        $line = preg_replace("!\*/!", "", $line);
+        $line = preg_replace("!/\*!", "//", $line);
+        $line = preg_replace("! \*!", "//", $line);
+
+        return $line;
+    }
+
     public static function getClassName($descriptor, $full_qualified = false)
     {
         if ($descriptor instanceof DescriptorProto || $descriptor instanceof EnumDescriptorProto) {

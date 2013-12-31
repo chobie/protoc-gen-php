@@ -116,7 +116,6 @@ class MessageGenerator
 //  printer->Print("use \\ProtocolBuffers\\ExtensionRegistry;\n");
 
         // TODO(chobie): add Message and Enum class here.
-
         $printer->put("// @@protoc_insertion_point(namespace:`name`)\n",
         "name", $this->descriptor->full_name);
         $printer->put("\n");
@@ -141,17 +140,13 @@ class MessageGenerator
                     if ($dict->getLeadingComments()) {
                         $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
                         foreach ($lines as $line) {
-                            if (strlen($line) > 0 && $line[0] == " ") {
-                                $line = substr($line, 1);
-                            }
-                            $line = preg_replace("!\*/!", "", $line);
-                            $line = preg_replace("!/\*!", "//", $line);
-                            $line = preg_replace("! \*!", "//", $line);
+                            $line = Helper::cleanupComment($line);
                             $printer->put(" * `comment`\n", "comment", $line);
                         }
                         $printer->put(" *\n");
                     }
                 }
+
                 $printer->put(" * @var `type` $`var`\n",
                     "type", $this->getTypeName($field),
                     "var", $field->getName());
@@ -175,12 +170,7 @@ class MessageGenerator
                         $printer->put(" *\n");
                         $lines = preg_split("/\r?\n/", trim($dict->getTrailingComments()));
                         foreach ($lines as $line) {
-                            if ($line[0] == " ") {
-                                $line = substr($line, 1);
-                            }
-                            $line = preg_replace("!\*/!", "", $line);
-                            $line = preg_replace("!/\*!", "//", $line);
-                            $line = preg_replace("! \*!", "//", $line);
+                            $line = Helper::cleanupComment($line);
                             $printer->put(" * `comment`\n", "comment", $line);
                         }
                         $printer->put(" *\n");
@@ -587,7 +577,6 @@ class MessageGenerator
         $this->printProperties($printer);
         $printer->put("// @@protoc_insertion_point(class_scope:`name`)\n\n",
             "name", $this->descriptor->full_name);
-
         $this->printGetDescriptor($printer);
 
         $printer->outdent();

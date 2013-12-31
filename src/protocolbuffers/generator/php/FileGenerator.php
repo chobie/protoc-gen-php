@@ -14,7 +14,6 @@ use google\protobuf\FieldDescriptorProto;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 
-
 class FileGenerator
 {
     protected $file;
@@ -62,7 +61,6 @@ class FileGenerator
                     $result .= ".";
                 }
                 $result .= $this->file->getPackage();
-
             }
         }
 
@@ -127,7 +125,6 @@ class FileGenerator
             $printer->outdent();
             $printer->put("});\n");
         }
-
     }
 
     public function generateSiblings($package_name, GeneratorContext $context, &$file_list)
