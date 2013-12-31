@@ -23,6 +23,9 @@ class CType extends \ProtocolBuffers\Enum
   
   // @@protoc_insertion_point(class_scope:.google.protobuf.FieldOptions.CType)
   
+  /**
+   * @return \ProtocolBuffers\EnumDescriptor
+   */
   public static function getEnumDescriptor()
   {
     static $descriptor;

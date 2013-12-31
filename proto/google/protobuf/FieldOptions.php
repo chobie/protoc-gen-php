@@ -170,7 +170,7 @@ class FieldOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => array(),
+        "default"  => \google\protobuf\FieldOptions\CType::STRING,
       )));
       $desc->addField(2, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_BOOL,

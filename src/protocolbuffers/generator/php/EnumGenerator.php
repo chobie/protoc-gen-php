@@ -15,6 +15,7 @@ use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
 use protocolbuffers\PragmaticInserter;
 use protocolbuffers\SourceInfoDictionary;
+use protocolbuffers\generator\php\Helper;
 
 class EnumGenerator extends MessageGenerator
 {
@@ -58,7 +59,7 @@ class EnumGenerator extends MessageGenerator
 
         $printer->put("class `name` extends \\ProtocolBuffers\\Enum\n{\n",
             "name",
-            $this->descriptor->getName()
+            Helper::getClassName($this->descriptor)
         );
         $printer->indent();
 
@@ -104,6 +105,9 @@ class EnumGenerator extends MessageGenerator
 
         $printer->put("\n");
 
+        $printer->put("/**\n");
+        $printer->put(" * @return \\ProtocolBuffers\\EnumDescriptor\n");
+        $printer->put(" */\n");
         $printer->put("public static function getEnumDescriptor()\n");
         $printer->put("{\n");
         $printer->indent();

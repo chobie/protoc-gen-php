@@ -23,6 +23,9 @@ class OptimizeMode extends \ProtocolBuffers\Enum
   
   // @@protoc_insertion_point(class_scope:.google.protobuf.FileOptions.OptimizeMode)
   
+  /**
+   * @return \ProtocolBuffers\EnumDescriptor
+   */
   public static function getEnumDescriptor()
   {
     static $descriptor;

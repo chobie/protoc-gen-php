@@ -11,7 +11,6 @@
 namespace protocolbuffers\generator\php;
 
 use google\protobuf\FieldDescriptorProto;
-use JsonSchema\Constraints\Type;
 use protocolbuffers\ExtensionPool;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
@@ -19,6 +18,7 @@ use protocolbuffers\MessagePool;
 use protocolbuffers\PragmaticInserter;
 use protocolbuffers\SourceInfoDictionary;
 use Symfony\Component\Yaml\Yaml;
+use protocolbuffers\generator\php\Helper;
 
 class MessageGenerator
 {
@@ -277,8 +277,6 @@ class MessageGenerator
 
         if ($php_options instanceof \google\protobuf\MessageOptions) {
             $php_message_options = $php_options->getExtension("php_option");
-            //error_log(var_export($php_options, true));
-            //error_log(var_export($php_message_options, true));
 
             if ($php_message_options->getUseSingleProperty()) {
                 $printer->put("\$phpoptions = \$desc->getOptions()->getExtension");
@@ -342,14 +340,14 @@ class MessageGenerator
             case \ProtocolBuffers::TYPE_GROUP:
                 return;
             case \ProtocolBuffers::TYPE_MESSAGE:
-                return str_replace(".", "\\", $field->getTypeName());
+                return Helper::getClassName($field);
                 break;
             case \ProtocolBuffers::TYPE_BYTES:
             case \ProtocolBuffers::TYPE_UINT32:
                 return $default_type;
                 break;
             case \ProtocolBuffers::TYPE_ENUM:
-                return str_replace(".", "\\", $field->getTypeName());
+                return Helper::getClassName($field);
                 break;
             case \ProtocolBuffers::TYPE_SFIXED32:
             case \ProtocolBuffers::TYPE_SFIXED64:
@@ -404,7 +402,7 @@ class MessageGenerator
                 $value = $field->getTypeName();
                 $descriptor = MessagePool::get($value);
 
-                if (FieldDescriptorProto\Label::isRepeated($field)) {
+                if (!FieldDescriptorProto\Label::isRepeated($field)) {
                     $def = $field->getDefaultValue();
                     if (!empty($def)) {
                         $value = str_replace(".", "\\", $descriptor->full_name). "::" . $field->getDefaultValue();
@@ -473,7 +471,7 @@ class MessageGenerator
 
         ExtensionPool::register($field->getExtendee(), $field->getNumber(), $field);
         $printer->put("\$registry->add('`message`', `extension`, new \\ProtocolBuffers\\FieldDescriptor(array(\n",
-            "message", str_replace(".", "\\", $field->getExtendee()),
+            "message", Helper::getExtendeeClassName($field),
             "extension", $field->getNumber()
         );
         $printer->indent();
@@ -505,7 +503,7 @@ class MessageGenerator
             $descriptor = MessagePool::get($name);
             $printer->put("\"message\" => \"`message`\",\n",
                 "message",
-                ltrim(str_replace(".", "\\\\", $descriptor->full_name), "\\")
+                Helper::getClassName($descriptor, true)
             );
         }
 
@@ -581,7 +579,7 @@ class MessageGenerator
 
         $printer->put("class `name` extends \\ProtocolBuffers\\Message\n{\n",
             "name",
-            $this->descriptor->getName()
+             Helper::getClassName($this->descriptor, false)
         );
         $printer->indent();
 

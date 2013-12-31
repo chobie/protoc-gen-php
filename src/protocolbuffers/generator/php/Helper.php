@@ -10,6 +10,7 @@
 namespace protocolbuffers\generator\php;
 
 use google\protobuf\DescriptorProto;
+use google\protobuf\EnumDescriptorProto;
 use google\protobuf\FieldDescriptorProto;
 use google\protobuf\FileDescriptorProto;
 use JsonSchema\Constraints\Type;
@@ -60,6 +61,25 @@ class Helper
         }
 
         return $result;
+    }
+
+    public static function getClassName($descriptor, $full_qualified = false)
+    {
+        if ($descriptor instanceof DescriptorProto || $descriptor instanceof EnumDescriptorProto) {
+            if ($full_qualified) {
+                return ltrim(str_replace(".", "\\\\", $descriptor->full_name), "\\");
+            } else {
+                return $descriptor->getName();
+            }
+        } else if ($descriptor instanceof FieldDescriptorProto) {
+            $name = str_replace(".", "\\", $descriptor->getTypeName());
+            return $name;
+        }
+    }
+
+    public static function getExtendeeClassName(FieldDescriptorProto $field)
+    {
+        return str_replace(".", "\\", $field->getExtendee());
     }
 
     public static function IsPackageNameOverriden(FileDescriptorProto $file)

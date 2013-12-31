@@ -214,7 +214,7 @@ class FileOptions extends \ProtocolBuffers\Message
         "optional" => true,
         "repeated" => false,
         "packable" => false,
-        "default"  => array(),
+        "default"  => \google\protobuf\FileOptions\OptimizeMode::SPEED,
       )));
       $desc->addField(11, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_STRING,
