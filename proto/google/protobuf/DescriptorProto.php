@@ -137,7 +137,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\FieldDescriptorProto",
+        "message" => '\google\protobuf\FieldDescriptorProto',
       )));
       $desc->addField(6, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -147,7 +147,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\FieldDescriptorProto",
+        "message" => '\google\protobuf\FieldDescriptorProto',
       )));
       $desc->addField(3, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -157,7 +157,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\DescriptorProto",
+        "message" => '\google\protobuf\DescriptorProto',
       )));
       $desc->addField(4, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -167,7 +167,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\EnumDescriptorProto",
+        "message" => '\google\protobuf\EnumDescriptorProto',
       )));
       $desc->addField(5, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -177,7 +177,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\DescriptorProto\\ExtensionRange",
+        "message" => '\google\protobuf\DescriptorProto\ExtensionRange',
       )));
       $desc->addField(7, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -187,7 +187,7 @@ class DescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\MessageOptions",
+        "message" => '\google\protobuf\MessageOptions',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.DescriptorProto)
 

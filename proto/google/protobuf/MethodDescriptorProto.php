@@ -110,7 +110,7 @@ class MethodDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\MethodOptions",
+        "message" => '\google\protobuf\MethodOptions',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.MethodDescriptorProto)
 

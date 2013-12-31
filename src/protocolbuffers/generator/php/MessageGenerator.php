@@ -255,7 +255,7 @@ class MessageGenerator
                 $name = $field->getTypeName();
 
                 $descriptor = MessagePool::get($name);
-                $printer->put("\"message\" => \"`message`\",\n",
+                $printer->put("\"message\" => '`message`',\n",
                     "message",
                     Helper::getClassName($descriptor, true)
                 );

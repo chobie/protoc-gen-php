@@ -88,7 +88,7 @@ class EnumValueDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\EnumValueOptions",
+        "message" => '\google\protobuf\EnumValueOptions',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.EnumValueDescriptorProto)
 

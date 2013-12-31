@@ -119,7 +119,7 @@ class UninterpretedOption extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\UninterpretedOption\\NamePart",
+        "message" => '\google\protobuf\UninterpretedOption\NamePart',
       )));
       $desc->addField(3, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_STRING,

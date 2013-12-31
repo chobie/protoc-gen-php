@@ -80,7 +80,7 @@ class ServiceDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\MethodDescriptorProto",
+        "message" => '\google\protobuf\MethodDescriptorProto',
       )));
       $desc->addField(3, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -90,7 +90,7 @@ class ServiceDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\ServiceOptions",
+        "message" => '\google\protobuf\ServiceOptions',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.ServiceDescriptorProto)
 

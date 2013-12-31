@@ -93,7 +93,7 @@ class EnumDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\EnumValueDescriptorProto",
+        "message" => '\google\protobuf\EnumValueDescriptorProto',
       )));
       $desc->addField(3, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -103,7 +103,7 @@ class EnumDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\EnumOptions",
+        "message" => '\google\protobuf\EnumOptions',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.EnumDescriptorProto)
 

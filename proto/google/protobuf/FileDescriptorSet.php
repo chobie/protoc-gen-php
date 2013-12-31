@@ -52,7 +52,7 @@ class FileDescriptorSet extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\FileDescriptorProto",
+        "message" => '\google\protobuf\FileDescriptorProto',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.FileDescriptorSet)
 

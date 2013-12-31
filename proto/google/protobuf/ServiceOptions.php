@@ -51,7 +51,7 @@ class ServiceOptions extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\UninterpretedOption",
+        "message" => '\google\protobuf\UninterpretedOption',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.ServiceOptions)
 

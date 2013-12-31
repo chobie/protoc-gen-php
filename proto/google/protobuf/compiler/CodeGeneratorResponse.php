@@ -79,7 +79,7 @@ class CodeGeneratorResponse extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\compiler\\CodeGeneratorResponse\\File",
+        "message" => '\google\protobuf\compiler\CodeGeneratorResponse\File',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.compiler.CodeGeneratorResponse)
 

@@ -96,7 +96,7 @@ class SourceCodeInfo extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\SourceCodeInfo\\Location",
+        "message" => '\google\protobuf\SourceCodeInfo\Location',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.SourceCodeInfo)
 

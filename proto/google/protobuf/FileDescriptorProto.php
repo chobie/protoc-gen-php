@@ -219,7 +219,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\DescriptorProto",
+        "message" => '\google\protobuf\DescriptorProto',
       )));
       $desc->addField(5, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -229,7 +229,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\EnumDescriptorProto",
+        "message" => '\google\protobuf\EnumDescriptorProto',
       )));
       $desc->addField(6, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -239,7 +239,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\ServiceDescriptorProto",
+        "message" => '\google\protobuf\ServiceDescriptorProto',
       )));
       $desc->addField(7, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -249,7 +249,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => true,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\FieldDescriptorProto",
+        "message" => '\google\protobuf\FieldDescriptorProto',
       )));
       $desc->addField(8, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -259,7 +259,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\FileOptions",
+        "message" => '\google\protobuf\FileOptions',
       )));
       $desc->addField(9, new \ProtocolBuffers\FieldDescriptor(array(
         "type"     => \ProtocolBuffers::TYPE_MESSAGE,
@@ -269,7 +269,7 @@ class FileDescriptorProto extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => null,
-        "message" => "\\google\\protobuf\\SourceCodeInfo",
+        "message" => '\google\protobuf\SourceCodeInfo',
       )));
       // @@protoc_insertion_point(builder_scope:.google.protobuf.FileDescriptorProto)
 
