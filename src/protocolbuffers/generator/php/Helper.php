@@ -169,7 +169,13 @@ class Helper
 
     public static function getExtendeeClassName(FieldDescriptorProto $field)
     {
-        return str_replace(".", "\\", $field->getExtendee());
+        if (getenv("PEAR_STYLE") ||
+            $field->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+            return str_replace(".", "_", preg_replace("/^.+/", ".", $field->getExtendee()));
+        } else {
+            return str_replace(".", "\\", $field->getExtendee());
+        }
+
     }
 
     public static function IsPackageNameOverriden(FileDescriptorProto $file)
