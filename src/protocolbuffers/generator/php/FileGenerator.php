@@ -17,7 +17,10 @@ use protocolbuffers\generator\php\Helper;
 
 class FileGenerator
 {
+    /** @var \google\protobuf\FileDescriptorProto  */
     protected $file;
+
+    /** @var \protocolbuffers\GeneratorContext  */
     protected $context;
 
     public function __construct(GeneratorContext $context,

@@ -19,6 +19,9 @@ use protocolbuffers\generator\php\Helper;
 
 class EnumGenerator extends MessageGenerator
 {
+    /** @var \google\protobuf\EnumDescriptorProto  */
+    protected $descriptor;
+
     public function __construct(GeneratorContext $context,
                                 \google\protobuf\EnumDescriptorProto $descriptor,
                                 &$file_list)

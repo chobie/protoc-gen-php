@@ -22,10 +22,13 @@ use protocolbuffers\generator\php\Helper;
 
 class MessageGenerator
 {
+    /** @var \google\protobuf\DescriptorProto  */
     protected $descriptor;
 
+    /** @var \protocolbuffers\GeneratorContext  */
     protected $context;
 
+    /** @var  array $file_list */
     protected $file_list;
 
     protected $enclose_namespace_ = false;
@@ -88,15 +91,8 @@ class MessageGenerator
                     $printer->put("namespace {\n\n");
                 }
             }
+            //  NOTE: We don't use `use` statement here. it's troublesome.
 
-//  NOTE: Printing use statement is troublesome in writing single file.
-//  printer->Print("use \\ProtocolBuffers;\n");
-//  printer->Print("use \\ProtocolBuffers\\Message;\n");
-//  printer->Print("use \\ProtocolBuffers\\FieldDescriptor;\n");
-//  printer->Print("use \\ProtocolBuffers\\DescriptorBuilder;\n");
-//  printer->Print("use \\ProtocolBuffers\\ExtensionRegistry;\n");
-
-            // TODO(chobie): add Message and Enum class here.
             $printer->put("// @@protoc_insertion_point(namespace:`name`)\n",
                 "name", $this->descriptor->full_name);
             $printer->put("\n");
@@ -132,13 +128,13 @@ class MessageGenerator
                 $printer->put(" * @var `type` $`var`\n",
                     "type", $this->getTypeName($field),
                     "var", $field->getName());
-                $printer->put(" * @tag `tag`\n",
-                    "tag", $field->getNumber());
+                $printer->put(" * @tag `tag`\n", "tag", $field->getNumber());
                 $printer->put(" * @label `required`\n",
                     "required", (FieldDescriptorProto\Label::isRequired($field) ? "required" : "optional"));
                 $printer->put(" * @type `type`\n",
                     "type",
                     Helper::getFieldTypeName($field));
+
                 if (FieldDescriptorProto\Label::isRepeated($field) &&
                         FieldDescriptorProto\Type::isMessage($field) ||
                         FieldDescriptorProto\Type::isEnum($field)) {
@@ -152,8 +148,7 @@ class MessageGenerator
                         $printer->put(" *\n");
                         $lines = preg_split("/\r?\n/", trim($dict->getTrailingComments()));
                         foreach ($lines as $line) {
-                            $line = Helper::cleanupComment($line);
-                            $printer->put(" * `comment`\n", "comment", $line);
+                            $printer->put(" * `comment`\n", "comment", Helper::cleanupComment($line));
                         }
                         $printer->put(" *\n");
                     }
