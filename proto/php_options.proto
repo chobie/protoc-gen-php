@@ -4,6 +4,12 @@ message PHPFileOptions {
   optional bool   multiple_files = 1 [default = true];
   optional bool   skip_unknown = 2;
   optional string base_class   = 3 [default = ""];
+  enum Style
+  {
+     PSR4 = 1;
+     PEAR = 2;
+  }
+  optional Style style = 4 [default = PSR4];
 }
 
 message PHPMessageOptions {

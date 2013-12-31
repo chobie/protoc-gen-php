@@ -90,23 +90,26 @@ class MessageGenerator
 
     public function printUseNameSpaceIfNeeded(Printer $printer)
     {
-        if ($this->hasNameSpace()) {
-            if ($this->enclose_namespace_) {
-                $printer->put(
-                    "namespace `namespace`\n{\n\n",
-                    "namespace",
-                    $this->getNameSpace());
-            } else {
-                $printer->put(
-                    "namespace `namespace`;\n\n",
-                    "namespace",
-                    $this->getNameSpace());
-            }
+        if (Helper::isPearStyle($this->descriptor)) {
+
         } else {
-            if ($this->enclose_namespace_) {
-                $printer->put("namespace {\n\n");
+            if ($this->hasNameSpace()) {
+                if ($this->enclose_namespace_) {
+                    $printer->put(
+                        "namespace `namespace`\n{\n\n",
+                        "namespace",
+                        $this->getNameSpace());
+                } else {
+                    $printer->put(
+                        "namespace `namespace`;\n\n",
+                        "namespace",
+                        $this->getNameSpace());
+                }
+            } else {
+                if ($this->enclose_namespace_) {
+                    $printer->put("namespace {\n\n");
+                }
             }
-        }
 
 //  NOTE: Printing use statement is troublesome in writing single file.
 //  printer->Print("use \\ProtocolBuffers;\n");
@@ -115,10 +118,11 @@ class MessageGenerator
 //  printer->Print("use \\ProtocolBuffers\\DescriptorBuilder;\n");
 //  printer->Print("use \\ProtocolBuffers\\ExtensionRegistry;\n");
 
-        // TODO(chobie): add Message and Enum class here.
-        $printer->put("// @@protoc_insertion_point(namespace:`name`)\n",
-        "name", $this->descriptor->full_name);
-        $printer->put("\n");
+            // TODO(chobie): add Message and Enum class here.
+            $printer->put("// @@protoc_insertion_point(namespace:`name`)\n",
+                "name", $this->descriptor->full_name);
+            $printer->put("\n");
+        }
     }
 
     public function printProperties(Printer $printer)

@@ -31,6 +31,7 @@ spl_autoload_register(function($name){
       'google\protobuf\compiler\CodeGeneratorResponse' => '/google/protobuf/compiler/CodeGeneratorResponse.php',
       'google\protobuf\compiler\CodeGeneratorResponse\File' => '/google/protobuf/compiler/CodeGeneratorResponse/File.php',
       'PHPFileOptions' => '/PHPFileOptions.php',
+      'PHPFileOptions\Style' => '/PHPFileOptions/Style.php',
       'PHPMessageOptions' => '/PHPMessageOptions.php',
       // @@protoc_insertion_point(autoloader_scope:classmap)
     );

@@ -1,5 +1,5 @@
 -
-  match: "^(EnumDescriptorProto|DescriptorProto)$"
+  match: "^(EnumDescriptorProto|FieldDescriptorProto|DescriptorProto)$"
   file: "/google/protobuf/$0.php"
   insertion_point: "class_scope:.google.protobuf.$0"
   insertion: |

@@ -13,6 +13,7 @@ namespace protocolbuffers\generator\php;
 use google\protobuf\FieldDescriptorProto;
 use protocolbuffers\GeneratorContext;
 use protocolbuffers\io\Printer;
+use protocolbuffers\generator\php\Helper;
 
 class FileGenerator
 {
@@ -97,10 +98,17 @@ class FileGenerator
             $tmp = str_replace("\\", DIRECTORY_SEPARATOR, $file);
             $key = str_replace(DIRECTORY_SEPARATOR, "\\", substr($file, 0, strrpos($file, ".")));
 
-            $printer->put("'`key`' => '`path`',\n",
+            if (Helper::isPearStyle($this->file)) {
+                $printer->put("'`key`' => '`path`',\n",
+                    "key", str_replace("\\", "_", ltrim($key, "\\")),
+                    "path", DIRECTORY_SEPARATOR . ltrim($tmp, DIRECTORY_SEPARATOR)
+                );
+            } else {
+                $printer->put("'`key`' => '`path`',\n",
                     "key", ltrim($key, "\\"),
                     "path", DIRECTORY_SEPARATOR . ltrim($tmp, DIRECTORY_SEPARATOR)
-            );
+                );
+            }
         }
 
         if (!$append_mode) {

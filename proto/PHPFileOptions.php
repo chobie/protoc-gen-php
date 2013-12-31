@@ -13,6 +13,8 @@
  * @method void setSkipUnknown(bool $value)
  * @method string getBaseClass()
  * @method void setBaseClass(string $value)
+ * @method \PHPFileOptions\Style getStyle()
+ * @method void setStyle(\PHPFileOptions\Style $value)
  */
 class PHPFileOptions extends \ProtocolBuffers\Message
 {
@@ -41,6 +43,15 @@ class PHPFileOptions extends \ProtocolBuffers\Message
    * @type \ProtocolBuffers::TYPE_STRING
    **/
   protected $base_class;
+  
+  /**
+   * @var \PHPFileOptions\Style $style
+   * @tag 4
+   * @label optional
+   * @type \ProtocolBuffers::TYPE_ENUM
+   * @see \PHPFileOptions\Style
+   **/
+  protected $style;
   
   
   // @@protoc_insertion_point(properties_scope:.PHPFileOptions)
@@ -84,6 +95,15 @@ class PHPFileOptions extends \ProtocolBuffers\Message
         "repeated" => false,
         "packable" => false,
         "default"  => "",
+      )));
+      $desc->addField(4, new \ProtocolBuffers\FieldDescriptor(array(
+        "type"     => \ProtocolBuffers::TYPE_ENUM,
+        "name"     => "style",
+        "required" => false,
+        "optional" => true,
+        "repeated" => false,
+        "packable" => false,
+        "default"  => \PHPFileOptions\Style::PSR4,
       )));
       // @@protoc_insertion_point(builder_scope:.PHPFileOptions)
 

@@ -14,6 +14,7 @@ use google\protobuf\EnumDescriptorProto;
 use google\protobuf\FieldDescriptorProto;
 use google\protobuf\FileDescriptorProto;
 use JsonSchema\Constraints\Type;
+use PHPFileOptions\Style;
 
 class Helper
 {
@@ -89,12 +90,25 @@ class Helper
     {
         if ($descriptor instanceof DescriptorProto || $descriptor instanceof EnumDescriptorProto) {
             if ($full_qualified) {
-                return "\\" . ltrim(str_replace(".", "\\", $descriptor->full_name), "\\");
+                if (self::isPearStyle($descriptor)) {
+                    return str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->full_name));
+                } else {
+                    return "\\" . ltrim(str_replace(".", "\\", $descriptor->full_name), "\\");
+                }
             } else {
-                return $descriptor->getName();
+                if (self::isPearStyle($descriptor)) {
+                    return str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->full_name));
+                } else {
+                    return $descriptor->getName();
+                }
             }
         } else if ($descriptor instanceof FieldDescriptorProto) {
-            $name = str_replace(".", "\\", $descriptor->getTypeName());
+            if (self::isPearStyle($descriptor)) {
+                $name = str_replace(".", "_", preg_replace("/^\.+/", "", $descriptor->getTypeName()));
+            } else {
+                $name = str_replace(".", "\\", $descriptor->getTypeName());
+            }
+
             return $name;
         }
     }
@@ -118,6 +132,25 @@ class Helper
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static function isPearStyle($descriptor)
+    {
+        if ($descriptor instanceof FileDescriptorProto) {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (getenv("PEAR_STYLE") ||
+                $descriptor->file()->getOptions()->getExtension("php")->getStyle() == Style::PEAR){
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
