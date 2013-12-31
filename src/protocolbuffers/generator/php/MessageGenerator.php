@@ -22,8 +22,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class MessageGenerator
 {
-    protected $file;
-
     protected $descriptor;
 
     protected $context;
