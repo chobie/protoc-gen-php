@@ -38,3 +38,6 @@ you can override protoc-gen-php behavior with environemnts.
 ## License
 
 new BSD License
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/chobie/protoc-gen-php/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
