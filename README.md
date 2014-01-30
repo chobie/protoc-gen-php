@@ -2,14 +2,32 @@
 
 protoc php generator plugin .
 
+# Installation
+
+you can install protoc-gen-php with composer command.
+
+````
+# add protocolbuffers/protoc-gen-php entry to your global composer.json ($HOME/.composer/composer.json)
+{
+    "require": {
+        "protocolbuffers/protoc-gen-php": "dev-master"
+    }
+}
+
+# install with composer
+composer global install
+# set PATH (add this line to your .bashrc or .zshrc.)
+export PATH=$HOME/.composer/vendor/bin/:$PATH
+````
+
 # Usage
 
 ````
-composer install
 # this will link composer/bin/protoc-gen-php to /usr/local/bin/protoc-gen-php
 protoc --php_out=<output_directory> -I. person.proto
-# you can also specify it..
-# protoc --plugin=composer/bin/protoc-gen-php --php_out=<output_directory> -I. person.proto
+
+# you can also specify the command.
+protoc --plugin=vendor/bin/protoc-gen-php --php_out=<output_directory> -I. person.proto
 ````
 
 ## Features
