@@ -8,9 +8,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-require  __DIR__ . '/../../vendor/autoload.php';
+foreach (array(__DIR__ . '/../../../../autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {$
+    if (file_exists($file)) {
+        define('PROTOC_GEN_PHP_COMPOSER_INSTALL', $file);
+        break;
+    }
+}
 
+if (!defined('PROTOC_GEN_PHP_COMPOSER_INSTALL')) {
+    die(
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget https://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+}
 
+require PROTOC_GEN_PHP_COMPOSER_INSTALL;
 
 $stdin =  stream_get_contents(STDIN);
 //file_put_contents("dat", $stdin);

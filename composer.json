@@ -22,7 +22,7 @@
         "php": ">=5.3.3",
         "symfony/yaml": "*",
         "ext-pcre": "*",
-        "ext-protocolbuffers": "*",
+        "ext-protocolbuffers": "*"
     },
     "bin": [
         "composer/bin/protoc-gen-php"
@@ -34,8 +34,5 @@
         "files": [
             "proto/autoload.php"
         ]
-    },
-    "config": {
-        "bin-dir": "bin"
     }
 }
