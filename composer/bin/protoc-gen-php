@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-foreach (array(__DIR__ . '/../../../../autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {$
+foreach (array(__DIR__ . '/../../../../autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
     if (file_exists($file)) {
         define('PROTOC_GEN_PHP_COMPOSER_INSTALL', $file);
         break;
