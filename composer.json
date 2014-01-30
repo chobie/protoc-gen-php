@@ -1,6 +1,6 @@
 {
-    "name": "protoc-gen-php/protoc-gen-php",
-    "description": "The PHP protoc generator plugin.",
+    "name": "protocolbuffers/protoc-gen-php",
+    "description": "protoc generator plugin for PECL ProtocolBuffers",
     "type": "library",
     "keywords": [
         "protoc",
@@ -21,7 +21,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/yaml": "*",
-        "ext-pcre": "*"
+        "ext-pcre": "*",
+        "ext-protocolbuffers": "*",
     },
     "bin": [
         "composer/bin/protoc-gen-php"
@@ -35,6 +36,6 @@
         ]
     },
     "config": {
-        "bin-dir": "/usr/local/bin/"
+        "bin-dir": "bin"
     }
 }
