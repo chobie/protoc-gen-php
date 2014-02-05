@@ -283,6 +283,17 @@ class MessageGenerator
         $printer->put("\n");
     }
 
+    public function getTypeName2(FieldDescriptorProto $field, $repeated = false)
+    {
+        $type = $this->getTypeName($field);
+        if ($type == "string") {
+            // add backslashes for scalar type hints https://github.com/chobie/protoc-gen-php/issues/2
+            $type = "\\" . $type;
+        }
+
+        return $type;
+    }
+
     public function getTypeName(FieldDescriptorProto $field, $repeated = false)
     {
         if (!$repeated && FieldDescriptorProto\Label::isRepeated($field)) {
@@ -416,13 +427,13 @@ class MessageGenerator
                 $printer->put(" * @method void append`variable`(`type2` \$value)\n",
                     "type", $this->getTypeName($field),
                     "variable", Helper::cameraize($field->getName()),
-                    "type2", $this->getTypeName($field, true)
+                    "type2", $this->getTypeName2($field, true)
                 );
             } else {
                 $printer->put(" * @method void set`variable`(`type2` \$value)\n",
                     "type", $this->getTypeName($field),
                     "variable", Helper::cameraize($field->getName()),
-                    "type2", $this->getTypeName($field)
+                    "type2", $this->getTypeName2($field)
                 );
             }
         }
