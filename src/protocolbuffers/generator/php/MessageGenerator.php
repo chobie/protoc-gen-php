@@ -285,7 +285,7 @@ class MessageGenerator
 
     public function getTypeName2(FieldDescriptorProto $field, $repeated = false)
     {
-        $type = $this->getTypeName($field);
+        $type = $this->getTypeName($field, $repeated);
         if ($type == "string") {
             // add backslashes for scalar type hints https://github.com/chobie/protoc-gen-php/issues/2
             $type = "\\" . $type;
