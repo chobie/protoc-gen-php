@@ -34,5 +34,10 @@
         "files": [
             "proto/autoload.php"
         ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
     }
 }
