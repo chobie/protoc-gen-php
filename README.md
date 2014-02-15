@@ -2,6 +2,8 @@
 
 protoc php generator plugin .
 
+[![Build Status](https://travis-ci.org/chobie/protoc-gen-php.png?branch=master)](https://travis-ci.org/chobie/protoc-gen-php)
+
 # Installation
 
 you can install protoc-gen-php with composer command.
