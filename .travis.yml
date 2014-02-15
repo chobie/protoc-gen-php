@@ -6,7 +6,7 @@ php:
 
 install:
   - pecl install protocolbuffers-0.2.2
-  - composer install --no-interaction
+  - composer install --no-interaction --prefer-dist
 
 script: ./vendor/bin/phpspec run
 

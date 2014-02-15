@@ -26,7 +26,8 @@
         "ext-protocolbuffers": "*"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev"
+        "phpspec/prophecy-phpunit": "~1.0",
+        "phpunit/phpunit": "3.7.*"
     },
     "bin": [
         "bin/protoc-gen-php"
