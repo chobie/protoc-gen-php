@@ -24,7 +24,6 @@ class Compiler
 
     public function __construct()
     {
-        fwrite(STDERR, "# protoc-gen-php\n");
     }
 
     protected function setupFullNameForEnum(EnumDescriptorProto $enum, $package_name = "")

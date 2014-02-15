@@ -26,6 +26,7 @@
         "ext-protocolbuffers": "*"
     },
     "require-dev": {
+        "nikic/php-parser": "dev-master",
         "phpspec/prophecy-phpunit": "~1.0",
         "phpunit/phpunit": "3.7.*"
     },
