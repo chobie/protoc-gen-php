@@ -25,6 +25,9 @@
         "ext-pcre": "*",
         "ext-protocolbuffers": "*"
     },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
     "bin": [
         "bin/protoc-gen-php"
     ],

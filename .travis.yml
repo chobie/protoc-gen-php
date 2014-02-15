@@ -1,0 +1,12 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+
+install: composer install --no-interaction
+script: ./vendor/bin/phpspec run
+
+notifications:
+  irc: "chat.freenode.net#php-protocolbuffers"
+  use_notice: true
