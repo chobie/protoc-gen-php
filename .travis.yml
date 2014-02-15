@@ -4,7 +4,10 @@ php:
   - 5.4
   - 5.5
 
-install: composer install --no-interaction
+install:
+  - pecl install protocolbuffers-0.2.2
+  - composer install --no-interaction
+
 script: ./vendor/bin/phpspec run
 
 notifications:
