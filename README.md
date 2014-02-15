@@ -47,7 +47,7 @@ see https://github.com/chobie/protoc-gen-php/blob/master/proto/.protoc.php.yml
 you can override protoc-gen-php behavior with environemnts.
 
 | key        | description                                                | example          |
-+------------+------------------------------------------------------------+------------------+
+|------------|------------------------------------------------------------|------------------|
 | PACKAGE    | over ride package name. expects dot delimited package name | PACKAGE=chobie.io|
 | PEAR_STYLE | don't use namespace.                                       | PEAR_STYLE=1     |
 
