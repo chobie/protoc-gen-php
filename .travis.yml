@@ -8,7 +8,7 @@ install:
   - pecl install protocolbuffers-0.2.2
   - composer install --no-interaction --prefer-dist
 
-script: ./vendor/bin/phpspec run
+script: ./vendor/bin/phpunit
 
 notifications:
   irc: "chat.freenode.net#php-protocolbuffers"
