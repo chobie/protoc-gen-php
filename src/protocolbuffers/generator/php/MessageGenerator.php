@@ -543,7 +543,7 @@ class MessageGenerator
             if ($dict->getLeadingComments()) {
                 $lines = preg_split("/\r?\n/", trim($dict->getLeadingComments()));
                 foreach ($lines as $line) {
-                    if ($line[0] == " ") {
+                    if ($line && $line[0] == " ") {
                         $line = substr($line, 1);
                     }
                     $printer->put(" * `comment`\n", "comment", $line);
